@@ -3,8 +3,7 @@ pages_build_output_dir = "."
 compatibility_date = "2024-09-01"
 
 # 로컬 개발(`npx wrangler pages dev .`)은 이 database_id와 무관하게 로컬 SQLite로 동작한다.
-# 실배포 전: `npx wrangler d1 create deokgu-lab-db` 실행 후 나오는 database_id로 아래 값을 교체.
 [[d1_databases]]
 binding = "DB"
 database_name = "deokgu-lab-db"
-database_id = "REPLACE_WITH_REAL_ID_BEFORE_DEPLOY"
+database_id = "9f87ee07-93c2-461a-8c8a-9b60272c778f"
