@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>체육관 교구 지도 대시보드 — 덕구랩</title>
+<meta name="description" content="그 교구 어디 뒀더라? 창고 뒤지는 시간을 검색 한 번으로. 교구 75개를 지도에서 바로 찾는 체육관 대시보드예요.">
+<meta property="og:title" content="체육관 교구 지도 대시보드 — 덕구랩">
+<meta property="og:description" content="그 교구 어디 뒀더라? 창고 뒤지는 시간을 검색 한 번으로. 교구 75개를 지도에서 바로 찾는 체육관 대시보드예요.">
+<meta property="og:image" content="shots/01-hero.png">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root{--cheese:#F2A33C;--cheese-deep:#C77A2C;--cream:#FFF7EC;--paper:#FFFDF8;--ink:#2E2A26;--ink-soft:#7A6A56;--mint:#3CC9A0;--line:#EAD9BE;--pink:#E8938A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Gowun Dodum',sans-serif;color:var(--ink);background:var(--cream);line-height:1.8;-webkit-font-smoothing:antialiased}
+  .hand{font-family:'Gaegu',cursive}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .back{font-family:'Gaegu',cursive;font-size:19px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .back:hover{color:var(--cheese-deep)}
+  .home-logo{height:44px;width:auto}
+  article{padding:8px 0 24px}
+  .cat{display:inline-block;font-size:13px;background:#FBEEDA;color:var(--cheese-deep);border-radius:20px;padding:4px 13px;margin-bottom:14px}
+  h1{font-family:'Gaegu',cursive;font-weight:700;font-size:clamp(34px,6vw,48px);line-height:1.15;margin-bottom:14px}
+  .hook{font-size:20px;color:var(--ink);background:var(--paper);border-left:5px solid var(--mint);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0 26px}
+  .tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:26px}
+  .tag{font-size:12px;padding:4px 11px;border-radius:20px;background:#FBEEDA;color:var(--cheese-deep)}
+  .tag.mint{background:#E1F6EF;color:#1c8f6f}
+  article h2{font-family:'Gaegu',cursive;font-weight:700;font-size:27px;margin:34px 0 10px;color:var(--ink)}
+  article p{margin:12px 0;font-size:16.5px}
+  figure{margin:22px 0}
+  figure img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 8px 22px rgba(199,122,44,.12)}
+  figcaption{text-align:center;font-size:13px;color:var(--ink-soft);margin-top:8px}
+  .video{position:relative;aspect-ratio:16/9;margin:22px 0}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:14px}
+  .cta{display:block;text-align:center;font-family:'Gaegu',cursive;font-size:22px;background:var(--cheese);color:#fff;text-decoration:none;border-radius:16px;padding:16px;margin:32px 0 10px;box-shadow:0 8px 20px rgba(242,163,60,.35)}
+  .cta:hover{background:var(--cheese-deep)}
+  .note{font-size:13.5px;color:var(--ink-soft);text-align:center;margin-bottom:8px}
+  .foot-actions{display:flex;gap:12px;justify-content:center;align-items:center;margin:30px 0;padding-top:24px;border-top:1px dashed var(--line)}
+  .like{font-family:'Gowun Dodum',sans-serif;font-size:15px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:9px 18px;cursor:pointer;display:inline-flex;gap:7px}
+  .like:hover{border-color:var(--pink);color:var(--ink)}
+  .sign{font-family:'Gaegu',cursive;font-size:18px;color:var(--ink-soft);text-align:center;margin:26px 0 60px}
+  /* 좋아요·댓글은 다음 세션에 Supabase 연결. 지금은 자리표시(UI만). */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back" href="../../index.html">← 덕구랩</a>
+    <img class="home-logo" src="../../assets/logo.png" alt="덕구랩" onerror="this.style.display='none'">
+  </div>
+  <article>
+    <span class="cat">🛠 도구 (체육·행정)</span>
+    <h1>체육관 교구 지도 대시보드</h1>
+    <div class="hook">그 교구 어디 뒀더라? 창고 문 열고 5분째 뒤적이다 쉬는 시간 또 날리셨죠. 교구 75개를 검색 한 번으로 찾는 체육관 대시보드예요.</div>
+    <div class="tags">
+      <span class="tag">#체육수업</span>
+      <span class="tag mint">#체육부장</span>
+      <span class="tag">#교구관리</span>
+      <span class="tag">#에듀테크</span>
+    </div>
+
+    <!-- 대표 스크린샷 -->
+    <figure><img src="shots/01-hero.png" alt="체육관 교구 지도 대시보드 화면"><figcaption>가이드·교구 지도·행정 지원을 한 화면에 모은 체육관 대시보드</figcaption></figure>
+
+    <h2>창고에서 흘려보낸 시간, 기억하세요?</h2>
+    <p>여러 학급이 함께 쓰는 체육관 창고는 금세 뒤죽박죽이 됩니다. "그 허들 어디 뒀더라", "축구공 몇 개 남았지" — 머릿속 장부와 종이 목록에 기대다 보면, 교구 하나 찾는 데 매번 몇 분씩 사라지죠. 박덕구쌤도 그 시간이 아까워서, 이번엔 체육관을 통째로 디지털로 옮겨봤습니다. 😅</p>
+
+    <h2>지도에서 바로 찾습니다</h2>
+    <p>체육창고를 2.5D 입체 지도로 그려두고, 가·나·다·라 구역마다 어떤 교구가 몇 개 있는지 연동했어요. 검색창에 "축구공"은 물론 "ㅊㄱ" 초성만 쳐도 위치가 뜹니다. 75개 교구 전체 목록이 구글 시트와 실시간으로 맞물려 돌아가서, 재고를 손으로 세던 수고가 그대로 줄어듭니다.</p>
+
+    <figure><img src="shots/03-locator.png" alt="2.5D 입체 보관지도와 교구 전체 목록"><figcaption>2.5D 입체 보관지도 + 교구 75개 실시간 목록 — 초성 검색으로 위치를 바로</figcaption></figure>
+
+    <h2>맵은 구글 시트로 관리해요</h2>
+    <p>화려해 보이는 저 2.5D 입체 지도랑 교구 목록, 사실은 <b>구글 시트 한 장</b>에서 나옵니다. 😲 "체육관 물품 장부" 시트에 관련영역·물품명·수량·보관장소(가/나/다/라)·비고만 적어두면, 그대로 대시보드 맵과 목록에 반영돼요. 시트 오른쪽에 그려둔 '체육관 물품 약도'가 앱의 구역 지도와 짝을 이룹니다.</p>
+    <p>덕분에 코딩을 몰라도 유지보수가 됩니다. 교구가 늘거나 자리가 바뀌면, 관리자쌤이 늘 쓰던 구글 시트에서 칸만 고치면 끝. 앱을 다시 손댈 일이 없으니 <b>관리가 의무가 되지 않아요.</b> 익숙한 시트 그대로 두고, 화면만 예쁘게 얹은 셈이죠. 🐈</p>
+
+    <figure><img src="shots/05-sheet-map.png" alt="구글 시트 체육관 물품 장부와 물품 약도"><figcaption>구글 시트 '체육관 물품 장부' — 물품·수량·보관구역(가/나/다/라)과 약도가 앱 맵의 데이터 소스</figcaption></figure>
+
+    <h2>요청할 데가 생겼습니다</h2>
+    <p>공 밸브가 망가졌는데 어디다 말하지? 하다가 그냥 넘어가던 것들 있으시죠. 비품 파손·정비 요청, 사고 싶은 교구 리스트, 행정 코멘트를 폼 하나로 접수하고 현황판에서 모아 봅니다. 흩어지던 요청이 한자리에 쌓이니, 체육부장쌤 손이 한결 가벼워져요.</p>
+
+    <figure><img src="shots/04-admin.png" alt="파손 요청·구매 희망·행정 코멘트 현황판"><figcaption>파손 요청 · 구매 희망 리스트 · 행정 코멘트를 폼과 현황판으로</figcaption></figure>
+
+    <h2>가이드는 덤이에요</h2>
+    <p>전동 공기펌프 사용법(종목별 권장 공기압까지), 웨건 보관법, 오늘 체육관 시간표에 지금 비었는지까지 — 여러 쌤이 같이 쓰는 체육관이 한 화면에 정리됩니다. 교구 찾느라 쓰던 시간, 이제 통째로 아끼세요. 손 덜 가는 체육관, 그 시작이 창고 정리일 줄은 저도 몰랐네요. 🐈</p>
+
+    <a class="cta" href="https://bau8584.github.io/nifty-volta/" target="_blank" rel="noopener">써보러 가기 →</a>
+    <p class="note">교구 데이터는 학교별 구글 시트에 맞춰 연동돼요. 화면 속 재고·시간표는 예시입니다.</p>
+
+    <div class="foot-actions">
+      <button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button>
+    </div>
+    <p class="sign hand">만드는 재미로 사는 초등쌤, 박덕구 🐈</p>
+  </article>
+</div>
+<script src="../../assets/config.js"></script>
+<script src="../../assets/api.js"></script>
+<script>DeokguPost.init();</script>
+</body>
+</html>

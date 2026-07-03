@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>점수판 웹 — 덕구랩</title>
+<meta name="description" content="태블릿 한 대가 체육관 전광판이 됩니다.">
+<meta property="og:title" content="점수판 웹 — 덕구랩">
+<meta property="og:description" content="태블릿 한 대가 체육관 전광판이 됩니다.">
+<meta property="og:image" content="shots/01-board.png">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root{--cheese:#F2A33C;--cheese-deep:#C77A2C;--cream:#FFF7EC;--paper:#FFFDF8;--ink:#2E2A26;--ink-soft:#7A6A56;--mint:#3CC9A0;--line:#EAD9BE;--pink:#E8938A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Gowun Dodum',sans-serif;color:var(--ink);background:var(--cream);line-height:1.8;-webkit-font-smoothing:antialiased}
+  .hand{font-family:'Gaegu',cursive}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .back{font-family:'Gaegu',cursive;font-size:19px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .back:hover{color:var(--cheese-deep)}
+  .home-logo{height:44px;width:auto}
+  article{padding:8px 0 24px}
+  .cat{display:inline-block;font-size:13px;background:#FBEEDA;color:var(--cheese-deep);border-radius:20px;padding:4px 13px;margin-bottom:14px}
+  h1{font-family:'Gaegu',cursive;font-weight:700;font-size:clamp(34px,6vw,48px);line-height:1.15;margin-bottom:14px}
+  .hook{font-size:20px;color:var(--ink);background:var(--paper);border-left:5px solid var(--mint);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0 26px}
+  .tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:26px}
+  .tag{font-size:12px;padding:4px 11px;border-radius:20px;background:#FBEEDA;color:var(--cheese-deep)}
+  .tag.mint{background:#E1F6EF;color:#1c8f6f}
+  article h2{font-family:'Gaegu',cursive;font-weight:700;font-size:27px;margin:34px 0 10px;color:var(--ink)}
+  article p{margin:12px 0;font-size:16.5px}
+  figure{margin:22px 0}
+  figure img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 8px 22px rgba(199,122,44,.12)}
+  figcaption{text-align:center;font-size:13px;color:var(--ink-soft);margin-top:8px}
+  .video{position:relative;aspect-ratio:16/9;margin:22px 0}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:14px}
+  .cta{display:block;text-align:center;font-family:'Gaegu',cursive;font-size:22px;background:var(--cheese);color:#fff;text-decoration:none;border-radius:16px;padding:16px;margin:32px 0 10px;box-shadow:0 8px 20px rgba(242,163,60,.35)}
+  .cta:hover{background:var(--cheese-deep)}
+  .note{font-size:13.5px;color:var(--ink-soft);text-align:center;margin-bottom:8px}
+  .foot-actions{display:flex;gap:12px;justify-content:center;align-items:center;margin:30px 0;padding-top:24px;border-top:1px dashed var(--line)}
+  .like{font-family:'Gowun Dodum',sans-serif;font-size:15px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:9px 18px;cursor:pointer;display:inline-flex;gap:7px}
+  .like:hover{border-color:var(--pink);color:var(--ink)}
+  .sign{font-family:'Gaegu',cursive;font-size:18px;color:var(--ink-soft);text-align:center;margin:26px 0 60px}
+  /* 좋아요·댓글은 다음 세션에 Supabase 연결. 지금은 자리표시(UI만). */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back" href="../../index.html">← 덕구랩</a>
+    <img class="home-logo" src="../../assets/logo.png" alt="덕구랩" onerror="this.style.display='none'">
+  </div>
+  <article>
+    <span class="cat">🛠 체육 도구</span>
+    <h1>점수판 웹</h1>
+    <div class="hook">태블릿 한 대가 체육관 전광판이 됩니다. 탭 한 번으로 점수 올리고, 종목은 앱 안에서 바꿔요.</div>
+    <div class="tags"><span class="tag">체육 수업</span><span class="tag mint">태블릿</span><span class="tag">점수판</span></div>
+
+    <!-- 대표 스크린샷 -->
+    <figure><img src="shots/01-board.png" alt="점수판 웹 화면"><figcaption>빨강·파랑 두 팀 점수가 화면을 꽉 채웁니다. 코트 반대편에서도 보여요.</figcaption></figure>
+
+    <h2>실물 점수판, 왜 그렇게 잘 넘어질까요 😅</h2>
+    <p>체육 시간에 점수 세는 거, 은근히 일입니다. 머릿속으로 세다 한눈팔면 "쌤 우리 몇 점이에요?" 소리가 사방에서 날아오죠. 그러다 정작 아이들 움직임은 못 봐요.</p>
+    <p>그렇다고 실물 점수판을 쓰자니, 이건 이거대로 번거롭더라고요. 세워두면 공에 맞아 넘어지고, 숫자판은 잘 고장나고. 무엇보다 <b>종목마다 필요한 게 다른데</b> 실물은 그걸 못 따라와요. 야구엔 스트라이크·볼이 있어야 하고, 킨볼은 팀이 셋인데 말이죠. 게다가 지금 <b>어느 게 우리 팀인지</b> 알려주기도 애매하고요.</p>
+    <p>그래서 만들었습니다. 태블릿 한 대를 그대로 체육관 전광판으로 쓰는 점수판이에요. 넘어질 일도, 고장날 일도 없고, 종목별 기능까지 챙깁니다. 세워두기만 하면 됩니다.</p>
+
+    <h2>조작은 탭 한 번</h2>
+    <p>팀 영역을 <b>탭하면 +1</b>, 아래 − 버튼으로 감소, ↺ 초기화로 리셋. 그게 전부예요. 아이들도 몇 초면 스스로 누릅니다. 교사가 점수판을 붙잡고 있을 이유가 없어지죠.</p>
+    <figure><img src="shots/10-general.png" alt="일반 점수판 — 빨강팀 3, 파랑팀 1"><figcaption>빨강 3, 파랑 1. 코트 반대편에서도 한눈에 들어옵니다.</figcaption></figure>
+
+    <h2>종목별로, 필요한 게 화면에 그대로</h2>
+    <p>여기까지면 흔한 점수판인데, 진짜는 <b>종목을 바꿔도 그 종목에 맞게</b> 화면이 바뀐다는 거예요. 앱을 갈아끼울 필요가 없습니다.</p>
+
+    <h2>세트제 경기엔 세트 카운터</h2>
+    <p>피구·배구처럼 세트로 가는 종목이면 가운데 <b>세트 스코어</b>가 따로 떠요. 이번 세트 점수와 세트 승수를 헷갈릴 일이 없죠.</p>
+    <figure><img src="shots/11-set.png" alt="세트 카운터를 켠 점수판"><figcaption>가운데 "세트 0 : 0" 패널로 세트 승수를 따로 셉니다.</figcaption></figure>
+
+    <h2>시간 재야 할 땐 타이머까지</h2>
+    <p>제한 시간이 있는 경기라면 상단에 타이머를 얹으세요. 카운트업·카운트다운·현재시간 중에 고를 수 있어요. 스톱워치 따로 들고 있을 필요가 없습니다.</p>
+    <figure><img src="shots/12-timer.png" alt="타이머를 켠 점수판"><figcaption>상단 시간 표시로 점수와 시간을 한 화면에서.</figcaption></figure>
+
+    <h2>야구할 땐 스트라이크·볼까지 그대로</h2>
+    <p>티볼·야구를 할 때 제일 아쉬웠던 게 이거였어요. 실물 점수판엔 <b>스트라이크·볼·아웃</b>이 없잖아요. 여기선 회차 표시에 S·B·O 카운트, 공수 전환까지 다 됩니다. 먼저 공격할 팀만 골라주면 시작이에요.</p>
+    <figure><img src="shots/13-baseball.png" alt="야구 모드 — 회차, 스트라이크·볼·아웃 표시"><figcaption>1회 초, 스트라이크·볼·아웃이 점으로 또렷하게.</figcaption></figure>
+
+    <h2>발야구도 종목에 맞춰</h2>
+    <p>발야구라면 표시 항목을 발야구에 맞게 켜고 끕니다. 야구 골격(회차·공수 전환·기록)은 그대로 쓰면서, 우리 반 규칙에 맞는 것만 남기면 돼요.</p>
+    <figure><img src="shots/14-footbaseball.png" alt="발야구 모드 보드"><figcaption>표시 항목을 발야구용으로 정리한 화면.</figcaption></figure>
+
+    <h2>킨볼은 세 팀, 목표점수는 자동</h2>
+    <p>킨볼은 팀이 셋이라 일반 점수판으론 답이 없었는데, 여기선 화면이 <b>세 칸</b>으로 갈라져요. 팀마다 목표 점수만큼 동그라미가 있어서 점수가 오르면 채워집니다. 목표에 얼마나 남았는지 아이들이 스스로 보죠.</p>
+    <figure><img src="shots/15-kinball.png" alt="킨볼 모드 — 세 팀, 목표점수 pip 표시"><figcaption>세 팀 각각의 점수와 목표까지 남은 칸이 한눈에.</figcaption></figure>
+
+    <h2>설정, 이런 것까지 됩니다</h2>
+    <p>모든 건 설정(⚙) 하나에서 손봅니다. 우리 반에 맞게 처음 한 번만 잡아두면 돼요.</p>
+    <figure><img src="shots/02-settings.png" alt="점수판 웹 설정 모달 — 팀 색상·이름, 종목 모드, 테마"><figcaption>팀 색·이름부터 야구·킨볼 옵션까지, 우리 반에 맞게.</figcaption></figure>
+    <p><b>어느 게 우리 팀인지</b>부터요. 팀 색을 빨강·파랑·초록·노랑·보라·주황 중에 고르고, 팀 이름도 직접 넣습니다. "빨강팀 이겨라"가 아니라 우리 반이 정한 팀 이름 그대로 화면에 떠요.</p>
+    <p>야구·발야구는 스트라이크·볼·아웃·파울 표시를 각각 켜고 끄고, 킨볼은 목표 점수(기본 13)와 시간 제한(분·초)까지 잡아둡니다. 눈부신 체육관이면 화이트 테마로 바꾸면 되고요. 오늘 티볼, 다음 주 킨볼, 그 다음 피구 세트제여도 이 화면 하나 안에서 다 돌아갑니다.</p>
+
+    <h2>점수 세느라 손 바쁠 일 없이</h2>
+    <p>설치도, 로그인도 없습니다. 링크만 열면 끝이에요. 점수 세고 지우고 다시 쓰던 그 손, 하나 덜 가시라고 만들었습니다. 손 덜 가는 교실, 여기서도요. 🐈</p>
+
+    <a class="cta" href="https://bau8584.github.io/score-board/" target="_blank" rel="noopener">써보러 가기 →</a>
+    <p class="note">링크만 열면 바로 시작 — 설치도 계정도 필요 없어요.</p>
+
+    <div class="foot-actions">
+      <button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button>
+    </div>
+    <p class="sign hand">만드는 재미로 사는 초등쌤, 박덕구 🐈</p>
+  </article>
+</div>
+<script src="../../assets/config.js"></script>
+<script src="../../assets/api.js"></script>
+<script>DeokguPost.init();</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 212" width="200" height="212" role="img" aria-label="덕구랩 마스코트 치즈 고양이 뀨 기본형">
+  <path d="M150 158 C186 156 188 112 162 106 C176 120 166 146 138 144 Z" fill="#F2A33C" stroke="#2E2A26" stroke-width="4" stroke-linejoin="round"/>
+  <ellipse cx="100" cy="172" rx="40" ry="32" fill="#F2A33C" stroke="#2E2A26" stroke-width="4"/>
+  <ellipse cx="100" cy="184" rx="20" ry="18" fill="#FFF7EC"/>
+  <ellipse cx="83" cy="200" rx="11" ry="8" fill="#FFF7EC" stroke="#2E2A26" stroke-width="4"/>
+  <ellipse cx="117" cy="200" rx="11" ry="8" fill="#FFF7EC" stroke="#2E2A26" stroke-width="4"/>
+  <path d="M56 60 L72 22 L96 52 Z" fill="#F2A33C" stroke="#2E2A26" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M144 60 L128 22 L104 52 Z" fill="#F2A33C" stroke="#2E2A26" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M66 50 L74 33 L86 48 Z" fill="#FFF7EC"/>
+  <path d="M134 50 L126 33 L114 48 Z" fill="#FFF7EC"/>
+  <circle cx="100" cy="96" r="54" fill="#F2A33C" stroke="#2E2A26" stroke-width="4"/>
+  <path d="M100 46 v13 M91 49 l3 11 M109 49 l-3 11" stroke="#DE8524" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M52 90 h13 M52 101 h13 M148 90 h-13 M148 101 h-13" stroke="#DE8524" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <ellipse cx="100" cy="110" rx="29" ry="19" fill="#FFF7EC"/>
+  <circle cx="82" cy="94" r="7.5" fill="#2E2A26"/>
+  <circle cx="118" cy="94" r="7.5" fill="#2E2A26"/>
+  <circle cx="84.5" cy="91.5" r="2.3" fill="#fff"/>
+  <circle cx="120.5" cy="91.5" r="2.3" fill="#fff"/>
+  <path d="M95 104 h10 l-5 6 Z" fill="#E8938A" stroke="#2E2A26" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M100 110 q-6 6 -12 2 M100 110 q6 6 12 2" stroke="#2E2A26" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+  <path d="M71 103 h-19 M71 111 h-17 M129 103 h19 M129 111 h17" stroke="#2E2A26" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+  <path d="M62 130 q38 20 76 0" stroke="#3CC9A0" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <circle cx="100" cy="142" r="5" fill="#3CC9A0" stroke="#2E2A26" stroke-width="2"/>
+</svg>

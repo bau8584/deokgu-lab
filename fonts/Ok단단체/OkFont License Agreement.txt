@@ -1,0 +1,64 @@
+OkFont License Agreement
+------------------------
+
+Copyright (c) OKTICON(OkFont) All Rights Reserved.
+
+본 글꼴(이하 "OkDanDan Font")은 
+OKTICON(OkFont)이 제작한 상업용 폰트이며, 다음의 사용 범위와 조건을 따릅니다.
+
+[사용 가능 범위]
+- 인쇄물: 브로슈어, 포스터, 책, 잡지, 패키지 등
+- 디지털: 웹사이트, 배너광고, SNS 이미지, 유튜브/영상 자막, 로고, E-book 등
+- 상품 제작: 굿즈(스티커, 토퍼, 레터링풍선, 의류 등), 판매용 제품
+- 개인 및 기업의 상업적/비상업적 용도
+
+[제한 사항]
+- 폰트 파일 자체의 재배포, 복사, 재판매
+- 폰트 파일을 수정하여 2차 배포
+- AI 학습 및 폰트 파일 추출/분해 후 재가공 행위
+- 제 3자에게 양도 또는 라이선스 이전
+
+[마케팅 활용 안내]
+해당 폰트를 활용한 이미지는 오케이티콘의 SNS/웹사이트 등에 소개 목적으로 활용될 수 있습니다.
+
+[환불규정]
+디지털 콘텐츠 특성상, 파일 다운로드 후에는 환불이 불가합니다.
+
+[기타 안내]
+- 본 라이선스에 명시되지 않은 사용 범위는 사전 협의 후 가능합니다.
+- 홈페이지 : https://www.okticon.com/
+- 문의: okticon.official@gmail.com
+- 인스타: @ok_ticon
+
+
+------------------------
+
+
+Copyright (c) OKTICON(OkFont) All Rights Reserved.
+
+This font (hereinafter referred to as "OkDanDan Font") 
+is a commercial font created by OKTICON(OkFont), and is subject to the following terms and conditions.
+
+[Permitted Uses]
+- Print: brochures, posters, books, magazines, packages, etc.
+- Digital: websites, banner ads, SNS images, YouTube/video subtitles, logos, e-books, etc.
+- Product creation: goods (stickers, toppers, lettering balloons, apparel, etc.), commercial products
+- Personal and corporate, both commercial and non-commercial uses
+
+[Restrictions]
+- Redistribution, copying, or resale of the font file itself
+- Modifying the font file for secondary distribution
+- Using the font file for AI training, extraction, or reverse engineering
+- Transfer or sublicensing to a third party
+
+[Marketing Use]
+Images created with this font may be introduced on OKTICON’s SNS or website for promotional purposes.
+
+[Refund Policy]
+Due to the nature of digital content, refunds are not available once the file has been downloaded.
+
+[Additional Information]
+- Any uses not specified in this license require prior agreement.
+- Website: https://www.okticon.com/
+- Contact: okticon.official@gmail.com
+- Instagram: @ok_ticon

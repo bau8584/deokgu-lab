@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ▼▼ 앱마다 교체 ▼▼ -->
+<title>전교임원선거 추천인 관리 시스템 — 덕구랩</title>
+<meta name="description" content="전교임원선거 추천인 명단, 아직도 종이로 세세요? 링크 하나로 저절로 모이고 반별로 검증됩니다.">
+<meta property="og:title" content="전교임원선거 추천인 관리 시스템 — 덕구랩">
+<meta property="og:description" content="전교임원선거 추천인 명단, 아직도 종이로 세세요? 링크 하나로 저절로 모이고 반별로 검증됩니다.">
+<meta property="og:image" content="shots/01-landing.png">
+<meta property="og:type" content="article">
+<!-- ▲▲ 앱마다 교체 ▲▲ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root{--cheese:#F2A33C;--cheese-deep:#C77A2C;--cream:#FFF7EC;--paper:#FFFDF8;--ink:#2E2A26;--ink-soft:#7A6A56;--mint:#3CC9A0;--line:#EAD9BE;--pink:#E8938A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Gowun Dodum',sans-serif;color:var(--ink);background:var(--cream);line-height:1.8;-webkit-font-smoothing:antialiased}
+  .hand{font-family:'Gaegu',cursive}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .back{font-family:'Gaegu',cursive;font-size:19px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .back:hover{color:var(--cheese-deep)}
+  .home-logo{height:44px;width:auto}
+  article{padding:8px 0 24px}
+  .cat{display:inline-block;font-size:13px;background:#FBEEDA;color:var(--cheese-deep);border-radius:20px;padding:4px 13px;margin-bottom:14px}
+  h1{font-family:'Gaegu',cursive;font-weight:700;font-size:clamp(34px,6vw,48px);line-height:1.15;margin-bottom:14px}
+  .hook{font-size:20px;color:var(--ink);background:var(--paper);border-left:5px solid var(--mint);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0 26px}
+  .tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:26px}
+  .tag{font-size:12px;padding:4px 11px;border-radius:20px;background:#FBEEDA;color:var(--cheese-deep)}
+  .tag.mint{background:#E1F6EF;color:#1c8f6f}
+  article h2{font-family:'Gaegu',cursive;font-weight:700;font-size:27px;margin:34px 0 10px;color:var(--ink)}
+  article p{margin:12px 0;font-size:16.5px}
+  figure{margin:22px 0}
+  figure img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 8px 22px rgba(199,122,44,.12)}
+  figcaption{text-align:center;font-size:13px;color:var(--ink-soft);margin-top:8px}
+  .video{position:relative;aspect-ratio:16/9;margin:22px 0}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:14px}
+  .cta{display:block;text-align:center;font-family:'Gaegu',cursive;font-size:22px;background:var(--cheese);color:#fff;text-decoration:none;border-radius:16px;padding:16px;margin:32px 0 10px;box-shadow:0 8px 20px rgba(242,163,60,.35)}
+  .cta:hover{background:var(--cheese-deep)}
+  .note{font-size:13.5px;color:var(--ink-soft);text-align:center;margin-bottom:8px}
+  .foot-actions{display:flex;gap:12px;justify-content:center;align-items:center;margin:30px 0;padding-top:24px;border-top:1px dashed var(--line)}
+  .like{font-family:'Gowun Dodum',sans-serif;font-size:15px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:9px 18px;cursor:pointer;display:inline-flex;gap:7px}
+  .like:hover{border-color:var(--pink);color:var(--ink)}
+  .sign{font-family:'Gaegu',cursive;font-size:18px;color:var(--ink-soft);text-align:center;margin:26px 0 60px}
+  /* 좋아요·댓글은 다음 세션에 Supabase 연결. 지금은 자리표시(UI만). */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back" href="../../index.html">← 덕구랩</a>
+    <img class="home-logo" src="../../assets/logo.png" alt="덕구랩" onerror="this.style.display='none'">
+  </div>
+  <article>
+    <span class="cat">🛠 도구 · 학급·행정</span>
+    <h1>전교임원선거 추천인 관리 시스템</h1>
+    <div class="hook">전교임원선거 추천인 명단, 아직도 종이로 세세요? 링크 하나로 저절로 모이고 반별로 검증됩니다.</div>
+    <div class="tags"><span class="tag">#초등교사</span><span class="tag">#학생회</span><span class="tag mint">#전교임원선거</span><span class="tag">#학급운영</span><span class="tag">#박덕구쌤</span></div>
+
+    <!-- 대표 스크린샷 -->
+    <figure><img src="shots/01-landing.png" alt="전교임원선거 추천인 관리 시스템 화면"><figcaption>학생회 추천인 명부 — 시작 화면</figcaption></figure>
+
+    
+    <p>전교임원선거철, 저만 그런가요? 후보마다 추천인 명부를 종이로 받아서, 밤에 앉아 이름을 하나하나 세고 있었어요. 심지어 &quot;이 서명, 본인이 직접 쓴 게 맞나?&quot;까지 확인하려니 끝이 없더라고요. 😮‍💨</p>
+    <p>그래서 또 만들었습니다… 누가 말려요 😅 <b>전교임원선거 추천인 관리 시스템</b>이에요.</p>
+
+    <h2>종이 명부 대신, 링크 하나로 시작</h2>
+    <p>시작 화면은 딱 두 갈래예요. 후보로 처음 왔으면 <b>[후보 등록하기]</b>, 이미 등록했으면 <b>[로그인]</b>. 학생에게 종이 한 장 안 돌려도 됩니다.</p>
+    <figure><img src="shots/01-landing.png" alt="시작 화면 — 후보 등록하기 / 로그인"><figcaption>후보 등록 또는 로그인 — 여기서 시작해요</figcaption></figure>
+
+    <h2>후보가 스스로 등록해요</h2>
+    <p>후보 등록 화면입니다. 학년·반·번호·이름·출마 직위에 로그인 비밀번호까지 후보가 직접 입력해요. 아래엔 &quot;거짓으로 추천인을 넣으면 후보 자격이 박탈될 수 있고, 모든 추천 기록은 반별로 검증된다&quot;는 안내와 정직 서약 체크가 있어요. 공정성을 처음부터 못 박아두는 거죠.</p>
+    <p>실제로 <b>6학년 1반 홍길동</b>이라는 예시 후보를 하나 넣어봤어요. 학년을 고르면 그 학년의 출마 직위(회장·부회장)가 딱 뜨고, 비밀번호까지 정하면 끝. 종이 명부 없이 후보가 스스로 시작합니다.</p>
+    <figure><img src="shots/06-candidate-register.png" alt="후보 등록 폼 — 홍길동 예시 입력"><figcaption>후보 등록 폼 — 예시로 &lsquo;홍길동&rsquo;을 넣어봤어요 (비밀번호는 가려짐)</figcaption></figure>
+
+    <h2>등록하면 바로 &lsquo;추천 받는 화면&rsquo;</h2>
+    <p>등록·로그인하면 후보 대시보드가 열리고, <b>[추천 받기]</b> 버튼 하나면 추천 화면으로 넘어가요. 여기서 후보는 기기를 추천해 줄 학생에게 그냥 건네주면 됩니다. 학생이 <b>본인 학년·반·번호·이름을 입력하고 손글씨로 서명</b>하면 그 자리에서 추천인 한 명이 등록돼요. &quot;같은 자리에서 한 후보에게만 추천할 수 있다&quot;는 안내도 화면에 딱 떠서, 종이로 돌릴 때 늘 헷갈리던 중복 추천을 앱이 막아줍니다.</p>
+    <figure><img src="shots/07-recommend-screen.png" alt="추천 받기 화면 — 추천 학생이 정보 입력·서명"><figcaption>추천 받기 화면 — 기기를 건네주면 학생이 직접 입력하고 서명해요</figcaption></figure>
+
+    <h2>교사는 손으로 안 세요 — 자동 집계 대시보드</h2>
+    <p>관리자(교사) 비밀번호로 들어가면 후보별 추천 현황이 한 화면에 쌓입니다. 직위별로 후보가 묶여 나오고, 각 후보마다 <b>목표 대비 진행률 막대</b>가 실시간으로 채워져요. 아래엔 <b>엑셀·PDF 다운로드</b> 버튼이 있어서, 결재·보관용 자료를 손집계 없이 그대로 뽑을 수 있고요. 밤에 앉아 이름 세던 그 노동이 통째로 사라지는 거죠.</p>
+    <p><i>이 대시보드엔 실제 학생 이름이 섞여 있어서, 예시 후보(홍길동) 말고 실명은 흐리게 처리했어요. 개인정보라서요 😅</i></p>
+    <figure><img src="shots/04-admin-dashboard.png" alt="관리자 집계 대시보드 (실명 블러 처리)"><figcaption>관리자 요약 화면 — 후보별 진행률과 엑셀·PDF 다운로드 (실명은 블러)</figcaption></figure>
+
+    <h2>우리 학교에 맞게, 설정도 손쉽게</h2>
+    <p>설정 탭에선 <b>직위별 목표 인원</b>, 추천하는 학생의 학년 범위, 출마 직위(6학년 회장·부회장 등)를 학교 상황에 맞게 만들고 바꿀 수 있어요. &quot;한 학생이 몇 명까지 추천할 수 있나&quot; 같은 규칙도 골라서 정할 수 있고요. 바꾸면 학생 화면에 바로 반영됩니다.</p>
+    <figure><img src="shots/05-admin-settings.png" alt="관리자 설정 화면 — 목표 인원·직위·추천 규칙"><figcaption>관리자 설정 — 목표 인원·출마 직위·추천 규칙을 학교에 맞게</figcaption></figure>
+
+    <h2>손 덜 가는 선거 관리</h2>
+    <p>손집계에 쓰던 밤 시간, 이제 통째로 아끼세요. 세고 검증하는 건 앱한테 맡기고, 쌤은 손 놓으시라고요. 🐈</p>
+
+    <a class="cta" href="https://script.google.com/macros/s/AKfycbywbyPV-uCbZlnDbUKzPUznzTsYpsuoFpKqJBAvrmKtHmoqvxHnU766MhKFQb5GPBs/exec" target="_blank" rel="noopener">써보러 가기 →</a>
+    <p class="note">선거철에 열어 보세요. 대시보드에 보이던 실제 학생 이름은 개인정보라 흐리게 처리했어요.</p>
+
+    <div class="foot-actions">
+      <button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button>
+    </div>
+    <p class="sign hand">만드는 재미로 사는 초등쌤, 박덕구 🐈</p>
+  </article>
+</div>
+<script src="../../assets/config.js"></script>
+<script src="../../assets/api.js"></script>
+<script>DeokguPost.init();</script>
+</body>
+</html>

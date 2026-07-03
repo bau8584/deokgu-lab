@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>덕구랩 — 만드는 재미로 사는 초등쌤, 박덕구</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  @font-face{font-family:'OkDanDan';src:url('fonts/OkDanDan-Bold.ttf') format('truetype');font-weight:400 700;font-display:swap}
+  :root{--cheese:#F2A33C;--cheese-deep:#C77A2C;--cream:#FFF7EC;--paper:#FFFDF8;--ink:#2E2A26;--ink-soft:#7A6A56;--mint:#3CC9A0;--line:#EAD9BE;--pink:#E8938A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Gowun Dodum',sans-serif;color:var(--ink);background:var(--cream);line-height:1.7;-webkit-font-smoothing:antialiased}
+  .hand{font-family:'Gaegu',cursive}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  header{padding:60px 0 34px;text-align:center}
+  .logo{display:inline-flex;align-items:center;gap:14px}
+  .logo .name{font-family:'Gaegu',cursive;font-weight:700;font-size:54px;line-height:.9}
+  .logo .name .u{border-bottom:6px solid var(--mint);border-radius:3px;padding-bottom:1px}
+  .tagline{margin-top:16px;font-size:19px}
+  .sub{margin-top:6px;font-size:15px;color:var(--ink-soft)}
+  .score{display:inline-flex;gap:10px;margin-top:24px;flex-wrap:wrap;justify-content:center}
+  .chip{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:9px 18px;text-align:center}
+  .chip b{font-family:'Gaegu',cursive;font-size:24px;display:block;line-height:1;color:var(--cheese-deep)}
+  .chip span{font-size:12px;color:var(--ink-soft)}
+  .controls{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:40px 0 22px}
+  .filter{display:flex;gap:8px;flex-wrap:wrap}
+  .chip-f{font-family:'Gaegu',cursive;font-size:17px;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);border-radius:22px;padding:6px 16px;transition:all .15s}
+  .chip-f:hover{border-color:var(--cheese)}
+  .chip-f.on{background:var(--cheese);border-color:var(--cheese);color:#fff}
+  .sort{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-soft)}
+  .sort select{font-family:'Gowun Dodum',sans-serif;font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:7px 12px;cursor:pointer}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease,box-shadow .15s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(199,122,44,.14)}
+  .thumb{aspect-ratio:16/10;background:repeating-linear-gradient(135deg,#FBEFD9,#FBEFD9 12px,#F7E7CC 12px,#F7E7CC 24px);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:12px;border-bottom:1px solid var(--line);position:relative}
+  .thumb.cat{background:repeating-linear-gradient(135deg,#FCEBE8,#FCEBE8 12px,#F8DFDA 12px,#F8DFDA 24px)}
+  .thumb.lab{background:#FBFBF7;border-bottom:1px dashed var(--line)}
+  .thumb img.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .badge{position:absolute;top:10px;left:10px;z-index:2;font-size:11px;padding:3px 9px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+  .card-body{padding:15px 16px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .card h3{font-family:'OkDanDan','Gaegu',sans-serif;font-size:25px;font-weight:400;letter-spacing:-.6px;line-height:1.25}
+  .card p{font-size:14px;color:var(--ink-soft);flex:1}
+  .tags{display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font-size:11px;padding:3px 9px;border-radius:20px;background:#FBEEDA;color:var(--cheese-deep)}
+  .tag.mint{background:#E1F6EF;color:#1c8f6f}
+  .foot{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+  .like{font-family:'Gowun Dodum',sans-serif;font-size:12px;color:var(--ink-soft);background:var(--cream);border:1px solid var(--line);border-radius:20px;padding:4px 11px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .12s;white-space:nowrap}
+  .like:hover{border-color:var(--pink);color:var(--ink)}
+  .like.liked{background:#FCEBE8;border-color:var(--pink);color:#c0685c;cursor:default}
+  .like b{font-weight:400}
+  .go{font-family:'Gaegu',cursive;font-size:16px;color:var(--ink);text-decoration:none;border-bottom:3px solid var(--mint);padding-bottom:1px}
+  .card.soon{align-items:center;justify-content:center;text-align:center;color:var(--ink-soft);border-style:dashed;background:transparent;padding:28px}
+  .card.soon .hand{font-size:22px;color:var(--cheese-deep)}
+  footer{margin:60px 0 48px;padding-top:26px;border-top:1px dashed var(--line);text-align:center}
+  .reveal{font-family:'Gaegu',cursive;font-size:22px}
+  .links{margin-top:14px;display:flex;gap:16px;justify-content:center;font-size:14px}
+  .links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent}
+  .links a:hover{border-bottom-color:var(--cheese)}
+  .logo-img{height:clamp(88px,14vw,150px);width:auto;display:block}
+  @media(max-width:560px){.logo .name{font-size:42px}.controls{justify-content:center}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">
+      <img class="logo-img" src="assets/logo.png" alt="덕구랩" />
+    </div>
+    <p class="tagline hand">만드는 재미로 사는 초등쌤, 박덕구</p>
+    <p class="sub">교실에서 불편한 걸 발견하면, 그냥 도구를 만들어 나눕니다.</p>
+    <div class="score">
+      <div class="chip"><b id="stat-made">0</b><span>만든 것</span></div>
+      <div class="chip"><b id="stat-shared">0</b><span>나눈 것</span></div>
+      <div class="chip"><b id="stat-dig">0</b><span>삽질</span></div>
+    </div>
+  </header>
+  <main>
+    <div class="controls">
+      <div class="filter">
+        <button class="chip-f on" data-filter="all">전체</button>
+        <button class="chip-f" data-filter="tool">🛠 도구</button>
+        <button class="chip-f" data-filter="tip">💡 팁</button>
+        <button class="chip-f" data-filter="lab">🧪 실험실</button>
+        <button class="chip-f" data-filter="kkyu">🐈 뀨</button>
+      </div>
+      <div class="sort">
+        <label for="sort">정렬</label>
+        <select id="sort">
+          <option value="rec">추천순</option>
+          <option value="new">최신순</option>
+          <option value="pop">인기순</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid">
+      <article class="card" data-type="tool" data-order="1" data-date="20240331" data-pop="0">
+        <div class="thumb" data-shot=""><span class="badge">🛠 도구</span><span>스크린샷 자리</span></div>
+        <div class="card-body">
+          <h3>디지털 교우관계 그래프</h3>
+          <p>설문 한 번으로 우리 반 관계도를 한눈에. 상담·따돌림 예방을 한 방에.</p>
+          <div class="tags"><span class="tag">교사·생활지도</span><span class="tag mint">운영 중</span></div>
+          <div class="foot"><button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button><a class="go" href="#">보러가기 →</a></div>
+        </div>
+      </article>
+      <article class="card" data-type="tool" data-order="2" data-date="20260615" data-pop="0">
+        <div class="thumb" data-shot="webs/school-league/shots/10-tier-ranking.png"><span class="badge">🛠 도구</span><span>스크린샷 자리</span></div>
+        <div class="card-body">
+          <h3>배드민턴 학교용 리그</h3>
+          <p>경기 결과만 넣으면 반 대항전 순위가 실시간으로. 순위표 손으로 안 그려도 돼요.</p>
+          <div class="tags"><span class="tag">체육 수업</span><span class="tag mint">운영 중</span></div>
+          <div class="foot"><button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button><a class="go" href="webs/school-league/index.html">보러가기 →</a></div>
+        </div>
+      </article>
+      <article class="card" data-type="tool" data-order="3" data-date="20260616" data-pop="0">
+        <div class="thumb" data-shot="webs/club-league/shots/10-tier.png"><span class="badge">🛠 도구</span><span>스크린샷 자리</span></div>
+        <div class="card-body">
+          <h3>배드민턴 클럽용 리그</h3>
+          <p>총무님 엑셀 순위표는 이제 그만. 동호회 리그가 알아서 돌아갑니다.</p>
+          <div class="tags"><span class="tag">동호회</span><span class="tag mint">운영 중</span></div>
+          <div class="foot"><button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button><a class="go" href="webs/club-league/index.html">보러가기 →</a></div>
+        </div>
+      </article>
+      <article class="card" data-type="tool" data-order="4" data-date="20260623" data-pop="0">
+        <div class="thumb" data-shot="webs/score-board/shots/01-board.png"><span class="badge">🛠 도구</span><span>스크린샷 자리</span></div>
+        <div class="card-body">
+          <h3>점수판 웹</h3>
+          <p>야구·발야구·킨볼·타이머까지, 태블릿 하나가 체육관 전광판이 됩니다.</p>
+          <div class="tags"><span class="tag">체육 수업</span><span class="tag mint">태블릿</span></div>
+          <div class="foot"><button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button><a class="go" href="webs/score-board/index.html">보러가기 →</a></div>
+        </div>
+      </article>
+      <article class="card" data-type="tool" data-order="5" data-date="20260625" data-pop="0">
+        <div class="thumb" data-shot="webs/nifty-volta/shots/01-hero.png"><span class="badge">🛠 도구</span><span>스크린샷 자리</span></div>
+        <div class="card-body">
+          <h3>체육관 교구 지도 대시보드</h3>
+          <p>“그 공 어디 뒀더라?” 창고 뒤지는 시간을 검색 한 번으로 끝냅니다.</p>
+          <div class="tags"><span class="tag">체육·행정</span><span class="tag mint">운영 중</span></div>
+          <div class="foot"><button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button><a class="go" href="webs/nifty-volta/index.html">보러가기 →</a></div>
+        </div>
+      </article>
+      <article class="card" data-type="tool" data-order="6" data-date="20260620" data-pop="0">
+        <div class="thumb" data-shot="webs/election-recommender/shots/01-landing.png"><span class="badge">🛠 도구</span><span>스크린샷 자리</span></div>
+        <div class="card-body">
+          <h3>전교임원선거 추천인 관리 시스템</h3>
+          <p>추천인 명단, 이제 종이로 안 세도 돼요. 반별 검증까지 자동으로.</p>
+          <div class="tags"><span class="tag">학급·행정</span><span class="tag mint">운영 중</span></div>
+          <div class="foot"><button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button><a class="go" href="webs/election-recommender/index.html">보러가기 →</a></div>
+        </div>
+      </article>
+      <article class="card" data-type="tip" data-order="4" data-date="20260630" data-pop="0">
+        <div class="thumb" data-shot="webs/apps-script-deploy/shots/03-deploy-config.png"><span class="badge">💡 팁</span><span>스크린샷 자리</span></div>
+        <div class="card-body">
+          <h3>앱스크립트, 복사부터 배포까지 따라하기</h3>
+          <p>받은 구글 시트 도구, 사본 만들기부터 웹앱 배포·QR까지. 코딩 없이 순서대로.</p>
+          <div class="tags"><span class="tag mint">꿀팁</span><span class="tag">앱스크립트</span></div>
+          <div class="foot"><button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button><a class="go" href="webs/apps-script-deploy/index.html">보러가기 →</a></div>
+        </div>
+      </article>
+      <article class="card" data-type="tip" data-order="5" data-date="20251204" data-pop="0">
+        <div class="thumb" data-shot=""><span class="badge">💡 팁</span><span>스크린샷 자리</span></div>
+        <div class="card-body">
+          <h3>엑셀 매크로로 나이스 자동입력</h3>
+          <p>반복 입력, 매크로가 대신. 한셀에서도 돼요.</p>
+          <div class="tags"><span class="tag mint">꿀팁</span></div>
+          <div class="foot"><button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button><a class="go" href="#">보러가기 →</a></div>
+        </div>
+      </article>
+      <article class="card" data-type="lab" data-order="6" data-date="20260625" data-pop="0">
+        <div class="thumb lab" data-shot=""><span class="badge">🧪 실험실</span><span>만드는 중…</span></div>
+        <div class="card-body">
+          <h3>음주 일기 앱</h3>
+          <p>별주부전 콘셉트로 절주 기록하기. 아직 토끼랑 거북이 싸우는 중.</p>
+          <div class="tags"><span class="tag">만드는 중</span></div>
+          <div class="foot"><button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button><a class="go" href="#">보러가기 →</a></div>
+        </div>
+      </article>
+      <article class="card" data-type="kkyu" data-order="8" data-date="20260630" data-pop="0">
+        <div class="thumb cat" data-shot=""><span class="badge">🐈 뀨</span><span>뀨 사진 자리</span></div>
+        <div class="card-body">
+          <h3>오늘의 뀨</h3>
+          <p>식빵 굽는 중. 덕구랩 조수는 오늘도 근무 태만.</p>
+          <div class="foot"><button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button><a class="go" href="#">보러가기 →</a></div>
+        </div>
+      </article>
+      <article class="card soon" data-type="tool" data-order="99" data-date="0" data-pop="-1">
+        <div class="hand">또 뭔가 만드는 중…</div>
+        <p style="margin-top:8px;font-size:13px">새 실험이 준비되면 여기에</p>
+      </article>
+    </div>
+  </main>
+  <footer>
+    <p class="reveal">사실 덕구는 저예요. 뀨는 고양이고요. 🐈</p>
+    <div class="links"><a href="#">인디스쿨</a><a href="#">인스타그램</a><a href="#" class="js-feedback">개선·문의 제안함</a></div>
+  </footer>
+</div>
+<script src="assets/config.js"></script>
+<script src="assets/api.js"></script>
+<script>
+  // 스크린샷 자리: data-shot에 파일 경로가 있으면 이미지로 채운다(비면 자리표시 유지)
+  document.querySelectorAll('.thumb[data-shot]').forEach(t=>{
+    const src=t.dataset.shot&&t.dataset.shot.trim();
+    if(!src)return;
+    const img=document.createElement('img');
+    img.className='shot';img.src=src;img.alt='';img.loading='lazy';
+    t.querySelectorAll('span:not(.badge)').forEach(s=>s.remove());
+    t.appendChild(img);
+  });
+  const grid=document.querySelector('.grid');
+  // 헤더 점수판 자동 집계 (홈 카드 기준): 만든 것=도구+팁, 나눈 것=실제 링크 연결, 삽질=실험실
+  (function(){
+    const cards=[...grid.querySelectorAll('.card:not(.soon)')];
+    const made=cards.filter(c=>c.dataset.type==='tool'||c.dataset.type==='tip').length;
+    const shared=cards.filter(c=>{const g=c.querySelector('a.go');const h=g&&g.getAttribute('href');return h&&h.trim()&&h.trim()!=='#';}).length;
+    const dig=cards.filter(c=>c.dataset.type==='lab').length;
+    const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+    set('stat-made',made);set('stat-shared',shared);set('stat-dig',dig);
+  })();
+  const chips=document.querySelectorAll('.chip-f');
+  const sortSel=document.getElementById('sort');
+  const num=(el,k)=>parseInt(el.dataset[k]||'0',10);
+  function applySort(){
+    const key=sortSel.value;
+    [...grid.children].sort((a,b)=>{
+      if(key==='rec')return num(a,'order')-num(b,'order');
+      if(key==='new')return num(b,'date')-num(a,'date');
+      if(key==='pop')return num(b,'pop')-num(a,'pop');
+      return 0;
+    }).forEach(c=>grid.appendChild(c));
+  }
+  function applyFilter(f){grid.querySelectorAll('.card').forEach(c=>{c.style.display=(f==='all'||c.dataset.type===f)?'':'none';});}
+  chips.forEach(c=>c.addEventListener('click',()=>{chips.forEach(x=>x.classList.remove('on'));c.classList.add('on');applyFilter(c.dataset.filter);}));
+  sortSel.addEventListener('change',applySort);
+  // 좋아요 — DeokguAPI 연동 (mock↔Supabase 자동). item_id = 슬러그(게시글과 공유) 또는 card:제목
+  function cardId(card){
+    const go=card.querySelector('a.go');const h=(go&&go.getAttribute('href'))||'';
+    const m=h.match(/webs\/([^\/]+)\//);
+    if(m)return m[1];
+    const t=card.querySelector('h3');return t?('card:'+t.textContent.trim()):null;
+  }
+  const likeBtns=[...grid.querySelectorAll('.like')];
+  const idOf=new Map(likeBtns.map(b=>[b,cardId(b.closest('.card'))]));
+  if(window.DeokguAPI){
+    const ids=[...new Set([...idOf.values()].filter(Boolean))];
+    DeokguAPI.getLikes(ids).then(m=>{
+      likeBtns.forEach(btn=>{const id=idOf.get(btn);const b=btn.querySelector('b');if(!id||!b)return;
+        if(DeokguAPI.live)b.textContent=m[id]||0; else if(m[id]>0)b.textContent=m[id];
+        if(DeokguAPI.hasLiked(id))btn.classList.add('liked');
+        btn.closest('.card').dataset.pop=b.textContent;
+      });
+    });
+  }
+  likeBtns.forEach(btn=>btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    if(btn.classList.contains('liked'))return;
+    const card=btn.closest('.card');const b=btn.querySelector('b');const seed=parseInt((b&&b.textContent)||'0',10);
+    const id=idOf.get(btn);
+    const done=n=>{if(n!=null&&b)b.textContent=n;card.dataset.pop=(b?b.textContent:n);btn.classList.add('liked');};
+    if(window.DeokguAPI&&id)DeokguAPI.like(id,seed).then(n=>done(n==null?seed:n));
+    else done(seed+1);
+  }));
+  // 제안함 모달
+  document.querySelectorAll('.js-feedback').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();window.DeokguFeedback&&DeokguFeedback.open(null);}));
+  // 카드 아무 곳이나 클릭 → 보러가기 링크로 이동 (도움됐어요·링크 클릭은 제외, href="#"은 이동 안 함)
+  grid.querySelectorAll('.card').forEach(card=>{
+    const go=card.querySelector('a.go');
+    const href=go&&go.getAttribute('href');
+    if(!href||href==='#')return;
+    card.style.cursor='pointer';
+    card.addEventListener('click',e=>{
+      if(e.target.closest('.like')||e.target.closest('a'))return;
+      window.location.href=href;
+    });
+  });
+</script>
+</body>
+</html>

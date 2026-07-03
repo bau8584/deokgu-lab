@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ▼▼ 앱마다 교체 ▼▼ -->
+<title>앱스크립트, 복사부터 배포까지 따라하기 — 덕구랩</title>
+<meta name="description" content="받은 구글 시트 도구, 사본 만들기부터 웹앱 배포·QR까지. 코딩 없이 순서대로 따라하기.">
+<meta property="og:title" content="앱스크립트, 복사부터 배포까지 따라하기 — 덕구랩">
+<meta property="og:description" content="받은 구글 시트 도구, 사본 만들기부터 웹앱 배포·QR까지. 코딩 없이 순서대로 따라하기.">
+<meta property="og:image" content="shots/09-admin-summary.png">
+<meta property="og:type" content="article">
+<!-- ▲▲ 앱마다 교체 ▲▲ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root{--cheese:#F2A33C;--cheese-deep:#C77A2C;--cream:#FFF7EC;--paper:#FFFDF8;--ink:#2E2A26;--ink-soft:#7A6A56;--mint:#3CC9A0;--line:#EAD9BE;--pink:#E8938A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Gowun Dodum',sans-serif;color:var(--ink);background:var(--cream);line-height:1.8;-webkit-font-smoothing:antialiased}
+  .hand{font-family:'Gaegu',cursive}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .back{font-family:'Gaegu',cursive;font-size:19px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .back:hover{color:var(--cheese-deep)}
+  .home-logo{height:44px;width:auto}
+  article{padding:8px 0 24px}
+  .cat{display:inline-block;font-size:13px;background:#FBEEDA;color:var(--cheese-deep);border-radius:20px;padding:4px 13px;margin-bottom:14px}
+  h1{font-family:'Gaegu',cursive;font-weight:700;font-size:clamp(34px,6vw,48px);line-height:1.15;margin-bottom:14px}
+  .hook{font-size:20px;color:var(--ink);background:var(--paper);border-left:5px solid var(--mint);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0 26px}
+  .tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:26px}
+  .tag{font-size:12px;padding:4px 11px;border-radius:20px;background:#FBEEDA;color:var(--cheese-deep)}
+  .tag.mint{background:#E1F6EF;color:#1c8f6f}
+  article h2{font-family:'Gaegu',cursive;font-weight:700;font-size:27px;margin:34px 0 10px;color:var(--ink)}
+  article h3{font-family:'Gaegu',cursive;font-weight:700;font-size:21px;margin:26px 0 6px;color:var(--cheese-deep);display:flex;align-items:baseline;gap:9px}
+  article h3 .step{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;border-radius:50%;background:var(--cheese);color:#fff;font-size:16px;flex:none}
+  article p{margin:12px 0;font-size:16.5px}
+  article ul{margin:10px 0 10px 22px}
+  article li{margin:5px 0;font-size:16.5px}
+  .callout{background:#E1F6EF;border-radius:12px;padding:13px 16px;margin:16px 0;font-size:15.5px;color:#1c8f6f}
+  figure{margin:22px 0}
+  figure img{max-width:100%;width:auto;height:auto;display:block;margin:0 auto;border-radius:14px;border:1px solid var(--line);box-shadow:0 8px 22px rgba(199,122,44,.12)}
+  figcaption{text-align:center;font-size:13px;color:var(--ink-soft);margin-top:8px}
+  .video{position:relative;aspect-ratio:16/9;margin:22px 0}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:14px}
+  .cta{display:block;text-align:center;font-family:'Gaegu',cursive;font-size:22px;background:var(--cheese);color:#fff;text-decoration:none;border-radius:16px;padding:16px;margin:32px 0 10px;box-shadow:0 8px 20px rgba(242,163,60,.35)}
+  .cta:hover{background:var(--cheese-deep)}
+  .note{font-size:13.5px;color:var(--ink-soft);text-align:center;margin-bottom:8px}
+  .foot-actions{display:flex;gap:12px;justify-content:center;align-items:center;margin:30px 0;padding-top:24px;border-top:1px dashed var(--line)}
+  .like{font-family:'Gowun Dodum',sans-serif;font-size:15px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:9px 18px;cursor:pointer;display:inline-flex;gap:7px}
+  .like:hover{border-color:var(--pink);color:var(--ink)}
+  .sign{font-family:'Gaegu',cursive;font-size:18px;color:var(--ink-soft);text-align:center;margin:26px 0 60px}
+  /* 좋아요·댓글은 다음 세션에 Supabase 연결. 지금은 자리표시(UI만). */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back" href="../../index.html">← 덕구랩</a>
+    <img class="home-logo" src="../../assets/logo.png" alt="덕구랩" onerror="this.style.display='none'">
+  </div>
+  <article>
+    <span class="cat">💡 팁</span>
+    <h1>앱스크립트, 복사부터 배포까지 따라하기</h1>
+    <div class="hook">누가 구글 시트로 만든 도구를 건네받으셨나요? 받은 시트를 그대로 쓰는 게 아니라, 사본 하나 떠서 순서대로 따라 하면 <b>내 전용 웹앱 주소</b>가 생깁니다. 코딩·서버·비용 전부 필요 없어요. 🐈</div>
+    <div class="tags">
+      <span class="tag">앱스크립트</span>
+      <span class="tag">구글 시트</span>
+      <span class="tag mint">서버·비용 0</span>
+      <span class="tag">배포 따라하기</span>
+      <span class="tag mint">손 덜 가는 교실</span>
+    </div>
+
+    <h2>1. 앱스크립트 · 웹앱이 뭐예요?</h2>
+    <p><b>앱스크립트(Apps Script)</b>는 구글 시트에 붙는 작은 프로그램이에요. 여기에 화면을 입혀 <b>웹앱으로 '배포'</b>하면, 브라우저로 여는 <b>주소(링크)</b>가 하나 생깁니다. 서버도 호스팅 비용도 없이 전부 구글 안에서 돌아가고요.</p>
+    <p>그 링크로 뭘 하는지는 <b>배포물마다 달라요.</b> 반 학생들이 함께 쓰는 것일 수도, 우리 반에서만 쓰는 것일 수도, 나 혼자 쓰는 개인 도구일 수도 있습니다. 이 글은 그런 도구를 <b>받았을 때 내 것으로 만들어 여는 방법</b>만 짚습니다.</p>
+
+    <h2>2. 받은 걸 내 것으로 — 사본부터 배포까지</h2>
+    <p>순서만 그대로 따라오시면 딱 10분. 👇</p>
+
+    <h3><span class="step">1</span> 사본 만들고 앱스크립트 열기</h3>
+    <p>받은 구글 시트를 열고 <b>파일 → 사본 만들기</b>로 내 드라이브에 사본을 하나 떠 둡니다. (원본이 아니라 <b>내 사본</b>을 배포해야 내 것이 돼요.) 만든 사본을 연 상태에서 상단 메뉴 <b>확장 프로그램 → Apps Script</b>를 누르면 편집기가 열립니다.</p>
+    <figure><img src="shots/01-open-appsscript.png" alt="확장 프로그램에서 Apps Script 열기"><figcaption>확장 프로그램 → Apps Script</figcaption></figure>
+
+    <h3><span class="step">2</span> [배포] → [새 배포]</h3>
+    <p>편집기 오른쪽 위의 파란 <b>배포</b> 버튼을 누르고 <b>새 배포</b>를 선택합니다.</p>
+    <figure><img src="shots/02-deploy-menu.png" alt="배포 메뉴에서 새 배포 선택"><figcaption>[배포] → [새 배포]</figcaption></figure>
+
+    <h3><span class="step">3</span> 유형과 권한 설정 후 배포</h3>
+    <p>유형은 <b>웹 앱</b>. 실행 사용자는 <b>나</b>, 액세스 권한은 <b>모든 사용자</b>로 맞춥니다. (이래야 누구나 로그인 없이 링크로 바로 들어옵니다.) 그리고 <b>배포</b>를 누릅니다.</p>
+    <figure><img src="shots/03-deploy-config.png" alt="웹 앱 유형, 실행=나, 액세스=모든 사용자 설정"><figcaption>유형=웹 앱 · 실행=나 · 액세스=모든 사용자</figcaption></figure>
+
+    <h3><span class="step">4</span> 액세스 승인</h3>
+    <p>처음 배포하면 권한을 물어봅니다. <b>액세스 승인</b>을 누르고, 본인 구글 계정을 선택하세요.</p>
+    <figure><img src="shots/04-authorize.png" alt="액세스 승인 화면"><figcaption>[액세스 승인] → 내 계정 선택</figcaption></figure>
+
+    <h3><span class="step">5</span> "확인되지 않은 앱" 화면 — 겁내지 마세요</h3>
+    <p>"Google hasn't verified this app"이라는 경고가 뜹니다. 놀라지 마세요 — <b>내가 방금 만든 내 앱이라 안전합니다.</b> 아래 <b>Advanced</b>를 누르고 <b>Go to … (unsafe)</b>로 계속 진행합니다.</p>
+    <figure><img src="shots/05-unsafe.png" alt="확인되지 않은 앱 경고 - Advanced에서 계속"><figcaption>Advanced → Go to … (unsafe)</figcaption></figure>
+
+    <h3><span class="step">6</span> 권한 전체 허용</h3>
+    <p>권한 목록이 나오면 <b>Select all</b>(전체 선택) 체크 후 <b>Continue</b>를 누릅니다.</p>
+    <figure><img src="shots/06-allow-continue.png" alt="권한 전체 선택 후 계속"><figcaption>[Select all] → [Continue]</figcaption></figure>
+
+    <h3><span class="step">7</span> 웹 앱 주소 복사</h3>
+    <p>배포 완료! <b>웹 앱 URL</b>이 뜹니다. 이 주소를 복사해 두세요. 이게 여러분의 앱 링크입니다.</p>
+    <figure><img src="shots/07-webapp-url.png" alt="배포 완료 - 웹 앱 URL 복사"><figcaption>웹 앱 URL 복사 — 이게 내 앱 링크예요</figcaption></figure>
+
+    <h3><span class="step">8</span> 열어서 확인</h3>
+    <p>복사한 주소를 브라우저에 붙여넣어 앱이 뜨면 <b>배포 성공!</b> 이제 이 링크가 살아있는 내 웹앱입니다. (배포물에 따라 관리자 설정 같은 게 있으면, 여기서 이어서 하면 돼요.)</p>
+    <figure><img src="shots/08-app-landing.png" alt="배포된 앱 첫 화면"><figcaption>주소로 들어가 앱이 뜨면 배포 성공!</figcaption></figure>
+
+    <h2>3. QR로 웹앱 나눠주기</h2>
+    <p>주소를 그대로 전달해도 되지만, <b>QR코드</b>로 만들면 훨씬 편해요. 복사한 웹 앱 URL을 <a href="https://new.express.adobe.com/tools/generate-qr-code" target="_blank" rel="noopener">무료 QR 코드 생성기</a>에 붙여넣어 QR 이미지를 뽑습니다.</p>
+    <p>그다음은 배포물 성격대로 나눠주세요. 여러 사람이 쓰는 도구라면 교실·복도·안내문에 QR을 붙이고, 나만 쓰는 도구라면 링크를 북마크해 두면 됩니다.</p>
+    <div class="callout">🐈 팁: QR과 원본 링크를 시트 한켠이나 학급 안내에 함께 적어두면 나중에 다시 찾기 쉬워요.</div>
+
+    <h2>4. 자주 묻는 것</h2>
+    <p><b>Q. 배포하다 "확인되지 않은 앱" 경고가 무서워요.</b><br>내가 방금 만든 내 앱이라 안전합니다. 구글이 아직 검토 안 한 개인 스크립트라 뜨는 표준 경고예요. Advanced → 계속으로 진행하면 됩니다.</p>
+    <p><b>Q. 사본 안 뜨고 받은 원본을 그대로 쓰면 안 되나요?</b><br>원본은 만든 사람 계정 거예요. <b>내 사본</b>을 떠야 내 계정에서 배포되고, 데이터도 내 시트에 쌓입니다.</p>
+    <p><b>Q. 배포는 됐는데 다른 사람이 "권한이 없습니다"가 떠요.</b><br>3번 스텝에서 액세스 권한을 <b>모든 사용자</b>로 했는지 확인하세요. '나만'으로 되어 있으면 남이 못 들어옵니다.</p>
+
+    <h2>마무리</h2>
+    <p>서버 만들 줄 몰라도, 코딩 안 배웠어도 괜찮습니다. 받은 구글 시트 도구 하나를, 순서만 따라 내 링크로 바꾸는 거예요. 무료로 자유롭게, 필요에 맞게 고쳐 쓰셔도 됩니다.</p>
+    <p>손 덜 가는 교실 — 좋은 도구, 받아서 바로 내 것으로. 🐈</p>
+
+    <a class="cta" href="https://script.google.com/macros/s/AKfycbywbyPV-uCbZlnDbUKzPUznzTsYpsuoFpKqJBAvrmKtHmoqvxHnU766MhKFQb5GPBs/exec" target="_blank" rel="noopener">예시 사이트 열어보기 →</a>
+    <p class="note">관리자 비밀번호: 1234</p>
+
+    <div class="foot-actions">
+      <button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button>
+    </div>
+    <p class="sign hand">만드는 재미로 사는 초등쌤, 박덕구 🐈</p>
+  </article>
+</div>
+<script src="../../assets/config.js"></script>
+<script src="../../assets/api.js"></script>
+<script>DeokguPost.init();</script>
+</body>
+</html>

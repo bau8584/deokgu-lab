@@ -1,0 +1,25 @@
+{
+  "URL": "https://bau8584.github.io/score-board/",
+  "title": "체육 점수판",
+  "h": [],
+  "buttons": [
+    "빨강팀\n0\n−",
+    "−",
+    "파랑팀\n0\n−",
+    "−",
+    "↺ 초기화",
+    "모드 ▾",
+    "⚙"
+  ],
+  "navs": [],
+  "inputs": [],
+  "tableCount": 0,
+  "bodyText": "빨강팀\n0\n−\n파랑팀\n0\n−\n↺ 초기화\n모드 ▾\n⚙",
+  "nameHits": [
+    "빨강팀",
+    "파랑팀",
+    "초기화",
+    "모드"
+  ],
+  "pageErrors": []
+}

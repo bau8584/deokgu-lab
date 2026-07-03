@@ -1,0 +1,13 @@
+# 의존성 (재설치 가능)
+node_modules/
+
+# 캡처용 임시 브라우저 프로필 (사용 안 함 — CDP 방식으로 대체됨)
+scripts/.cap-profile/
+
+# 세션 중 생성되는 임시 미리보기/테스트 산출물
+scripts/_*.mjs
+scripts/_*.png
+
+# OS/에디터 잡동사니
+.DS_Store
+Thumbs.db

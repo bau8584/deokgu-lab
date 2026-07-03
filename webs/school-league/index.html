@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>배드민턴 학교용 리그 — 덕구랩</title>
+<meta name="description" content="체육 리그 순위표, 손으로 그리다 쉬는 시간 다 가셨죠? 경기 결과만 넣으면 티어·랭킹이 실시간으로 착착.">
+<meta property="og:title" content="배드민턴 학교용 리그 — 덕구랩">
+<meta property="og:description" content="체육 리그 순위표, 손으로 그리다 쉬는 시간 다 가셨죠? 경기 결과만 넣으면 티어·랭킹이 실시간으로 착착.">
+<meta property="og:image" content="shots/10-tier-ranking.png">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root{--cheese:#F2A33C;--cheese-deep:#C77A2C;--cream:#FFF7EC;--paper:#FFFDF8;--ink:#2E2A26;--ink-soft:#7A6A56;--mint:#3CC9A0;--line:#EAD9BE;--pink:#E8938A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Gowun Dodum',sans-serif;color:var(--ink);background:var(--cream);line-height:1.8;-webkit-font-smoothing:antialiased}
+  .hand{font-family:'Gaegu',cursive}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .back{font-family:'Gaegu',cursive;font-size:19px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .back:hover{color:var(--cheese-deep)}
+  .home-logo{height:44px;width:auto}
+  article{padding:8px 0 24px}
+  .cat{display:inline-block;font-size:13px;background:#FBEEDA;color:var(--cheese-deep);border-radius:20px;padding:4px 13px;margin-bottom:14px}
+  h1{font-family:'Gaegu',cursive;font-weight:700;font-size:clamp(34px,6vw,48px);line-height:1.15;margin-bottom:14px}
+  .hook{font-size:20px;color:var(--ink);background:var(--paper);border-left:5px solid var(--mint);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0 26px}
+  .tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:26px}
+  .tag{font-size:12px;padding:4px 11px;border-radius:20px;background:#FBEEDA;color:var(--cheese-deep)}
+  .tag.mint{background:#E1F6EF;color:#1c8f6f}
+  article h2{font-family:'Gaegu',cursive;font-weight:700;font-size:27px;margin:34px 0 10px;color:var(--ink)}
+  article p{margin:12px 0;font-size:16.5px}
+  figure{margin:22px 0}
+  figure img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 8px 22px rgba(199,122,44,.12)}
+  figcaption{text-align:center;font-size:13px;color:var(--ink-soft);margin-top:8px}
+  .cta{display:block;text-align:center;font-family:'Gaegu',cursive;font-size:22px;background:var(--cheese);color:#fff;text-decoration:none;border-radius:16px;padding:16px;margin:32px 0 10px;box-shadow:0 8px 20px rgba(242,163,60,.35)}
+  .cta:hover{background:var(--cheese-deep)}
+  .note{font-size:13.5px;color:var(--ink-soft);text-align:center;margin-bottom:8px}
+  .foot-actions{display:flex;gap:12px;justify-content:center;align-items:center;margin:30px 0;padding-top:24px;border-top:1px dashed var(--line)}
+  .like{font-family:'Gowun Dodum',sans-serif;font-size:15px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:9px 18px;cursor:pointer;display:inline-flex;gap:7px}
+  .like:hover{border-color:var(--pink);color:var(--ink)}
+  .sign{font-family:'Gaegu',cursive;font-size:18px;color:var(--ink-soft);text-align:center;margin:26px 0 60px}
+  /* 좋아요·댓글은 다음 세션에 Supabase 연결. 지금은 자리표시(UI만). */
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back" href="../../index.html">← 덕구랩</a>
+    <img class="home-logo" src="../../assets/logo.png" alt="덕구랩" onerror="this.style.display='none'">
+  </div>
+  <article>
+    <span class="cat">🛠 도구 · 체육 수업</span>
+    <h1>배드민턴 학교용 리그</h1>
+    <div class="hook">체육 리그 순위표, 손으로 그리다 쉬는 시간 또 가셨죠? 😮‍💨<br>경기 결과만 넣으면 티어·랭킹이 실시간으로 착착.</div>
+    <div class="tags">
+      <span class="tag">#초등교사</span>
+      <span class="tag">#체육수업</span>
+      <span class="tag mint">#배드민턴</span>
+      <span class="tag">#학급대항전</span>
+      <span class="tag">#박덕구쌤</span>
+    </div>
+
+    <figure><img src="shots/10-tier-ranking.png" alt="티어 순위표 — 브론즈부터 다이아까지 RP 랭킹"><figcaption>티어 순위표 — 순위·티어·RP·최근 5경기 승패가 한눈에</figcaption></figure>
+
+    <p>체육 시간에 반 대항전이나 배드민턴 리그 한 번 돌려보신 쌤들은 아실 거예요. 경기 자체는 아이들이 알아서 신나게 하는데, 문제는 <b>그 뒤</b>입니다. 누가 이겼는지 받아 적고, 칠판에 순위표 고쳐 쓰고, 다음 대진 짜고… 정신 차려보면 쉬는 시간이 또 사라져 있죠.</p>
+
+    <p>그래서 또 만들었습니다. 누가 말려요 😅 <b>학교용 배드민턴 리그</b>예요. 체육 수업이나 반 대항전 리그를, 티어 게임처럼 굴리는 도구입니다.</p>
+
+    <h2>브론즈에서 다이아까지, 순위는 앱이</h2>
+    <p>순위표에 티어(브론즈~다이아)·RP 점수·최근 5경기 승패·승률이 착 정리돼요. 학년·티어·성별로 필터도 되고, 3연승이면 뱃지도 붙습니다. 칠판 지우개 들고 순위표 고쳐 쓰던 그 반복을 앱한테 넘기는 거예요. 딱 그만큼, 손 덜 가는 교실이 되는 거고요.</p>
+
+    <h2>경기 점수는 탭 몇 번으로</h2>
+    <p>단식·복식 골라, 선수 두 명 고르고, +1·+5·+10 버튼으로 점수만 올리면 끝이에요. 종이도 볼펜도 필요 없고, 잘못 눌러도 -1이나 0 초기화로 바로 고칩니다. 심판 보면서 한 손으로 채점되게 만들었어요.</p>
+
+    <figure><img src="shots/11-record-input.png" alt="경기 기록 입력 스코어보드"><figcaption>단식/복식 전환 + 큼직한 점수 버튼 — 한 손 채점</figcaption></figure>
+
+    <h2>다음 상대, AI가 골라드려요</h2>
+    <p>"쟤랑 쟤랑 붙여도 되나?" 고민 안 하셔도 돼요. 선수 하나 고르면 우리 반·다른 반·다른 학년 중에서 실력이 비슷한 라이벌을 AI가 추천해 줍니다. 이기면 RP 얼마 오르고 지면 얼마 빠지는지까지 미리 보여줘서, 아이도 "해볼 만한데?" 하고 덤벼요. 🏸</p>
+
+    <figure><img src="shots/12-match-ai.png" alt="AI 매치 추천 — 라이벌 추천과 예상 RP 변동"><figcaption>AI 추천 라이벌 #1·#2 + 예상 RP 변동 미리보기</figcaption></figure>
+
+    <h2>경기 끝나면 이 화면, 애들이 난리 나요</h2>
+    <p>경기가 끝나면 <b>DIVISION UP</b> 정산 화면이 뜹니다. 이긴 쪽 승급·진 쪽 강등, 오른 RP, 오늘의 첫 승·복수전 성공 같은 보너스까지 게임 결과처럼 촥 펼쳐져요. 이게 진짜 물건입니다. "나 승급했어!" 한마디에 다음 판을 스스로 기다리거든요. 동기부여는 앱이 대신 해주니, 쌤 손은 그만큼 덜 가고요.</p>
+
+    <figure><img src="shots/13-division-up.png" alt="DIVISION UP 경기 결과 정산 화면"><figcaption>승급·강등·보너스·페널티까지 게임 결과처럼 연출</figcaption></figure>
+
+    <h2>태블릿 넘겨도 관리자 화면은 잠금</h2>
+    <p>태블릿 한 대로 리그를 굴리다 보면 아이가 만지게 되잖아요. 그래서 <b>화면 잠금</b>을 넣었어요. 순위표·관리자 탭은 리그 코드로 잠가두고, 기록 입력 화면만 열어서 넘길 수 있습니다. 명단은 나이스 명렬표로 대량등록, 데이터는 JSON으로 백업, 시즌도 새로 열 수 있고요. 운영 잡무는 최대한 앱이 가져갑니다.</p>
+
+    <figure><img src="shots/14-admin-lock.png" alt="교사 관리자 패널 — 화면 잠금과 운영 메뉴"><figcaption>화면 잠금 · 나이스 대량등록 · JSON 백업 · 시즌 관리</figcaption></figure>
+
+    <h2>운영은 관리자에서 한 번에</h2>
+    <p>학기 초 명단 등록부터 학기 말 정리까지, 손 갈 일은 관리자 화면에서 한 번에 끝나요. <b>학생 관리</b>에선 나이스 명렬표로 우리 반 명단을 올리고, RP도 직접 손보거나 잘못 지운 학생은 복원까지 됩니다. 🐈</p>
+
+    <figure><img src="shots/18-member.png" alt="학생 관리 — 명단표, RP 수정·삭제, 삭제 학생 복원"><figcaption>나이스 명렬표로 등록 · RP 수정/삭제 · 삭제한 학생 복원</figcaption></figure>
+
+    <p>학기가 바뀌면 <b>새 시즌</b>을 열면 돼요. RP는 다 같이 1000점부터 다시 출발하고, 아이들 명단은 그대로 유지됩니다. 새 학기 리그를 처음부터 공정하게 다시 굴리는 거죠.</p>
+
+    <figure><img src="shots/20-season.png" alt="시즌 관리 — 현재 시즌·경기수·참여 학생, 새 시즌 시작"><figcaption>현재 시즌·경기수·참여 학생 확인 · 새 시즌 시작(1000RP 초기화, 명단 유지)</figcaption></figure>
+
+    <p>그리고 제일 마음 편한 건 <b>데이터 관리</b>예요. 전체 리그를 JSON 파일 하나로 통째로 내보내 두면, 태블릿이 바뀌거나 뭔가 꼬여도 그 파일 올려서 그대로 되살립니다. 데이터 날아갈 걱정 없이 학기를 굴리시라고요.</p>
+
+    <figure><img src="shots/21-backup.png" alt="데이터 관리 — 전체 JSON 백업 내보내기와 업로드 복원"><figcaption>전체 JSON 백업 내보내기 · 업로드 롤백 복원</figcaption></figure>
+
+    <h2>보는 재미: 테마 4가지</h2>
+    <p>같은 리그도 화면 톤을 바꾸면 분위기가 확 달라져요. <b>게임·블랙·모던·클레이</b> 네 가지 테마를 팝오버에서 슥 골라 쓸 수 있습니다. 우리 반 취향이나 그날 수업 분위기에 맞춰, 아이들이 좋아하는 톤으로 태블릿 화면을 꾸며 보세요. 게임처럼 화려하게도, 차분한 블랙으로도. 🏸</p>
+
+    <figure><img src="shots/theme-picker.png" alt="화면 테마 선택 — 게임·블랙·모던·클레이 4종 팝오버"><figcaption>화면 테마 4종(게임·블랙·모던·클레이) — 취향대로 골라 쓰기</figcaption></figure>
+
+    <h2>리그 규칙은 우리 반에 맞게</h2>
+    <p>티어 기준점, 승·패 RP, 보너스와 페널티까지 다 손볼 수 있어요. 짧게 촘촘히 갈지, 오늘의 첫 승에 얼마를 줄지, 굴욕적 완패는 얼마나 뺄지 — 프리셋으로 슥 바꾸거나 표에서 직접 조정하면 됩니다. 우리 반 분위기랑 수업 목적에 맞게 재단하세요.</p>
+
+    <figure><img src="shots/16-settings-bonus.png" alt="보너스 점수 설정 화면"><figcaption>오늘의 첫 승·연승 행진·언더독 격파… 보너스도 내 맘대로</figcaption></figure>
+
+    <h2>로그인 한 번이면 시작</h2>
+    <p>구글 계정으로 들어가고, 데이터는 Supabase에 안전하게 담깁니다. 로그인해야 쓰는 서비스지만 세팅이 무겁진 않아요. 우리 반 명단만 올리면 바로 리그가 굴러갑니다. (위 화면들은 전부 가짜 이름으로 만든 데모 리그예요 🐈)</p>
+
+    <a class="cta" href="https://school-league.bau8584.workers.dev/" target="_blank" rel="noopener">써보러 가기 →</a>
+    <p class="note">구글 로그인이 필요해요. 우리 반 체육 리그부터 가볍게 시작해 보세요.</p>
+
+    <div class="foot-actions">
+      <button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button>
+    </div>
+    <p class="sign hand">만드는 재미로 사는 초등쌤, 박덕구 🐈</p>
+  </article>
+</div>
+<script src="../../assets/config.js"></script>
+<script src="../../assets/api.js"></script>
+<script>DeokguPost.init();</script>
+</body>
+</html>
