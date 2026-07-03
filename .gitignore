@@ -1,6 +1,9 @@
 # 의존성 (재설치 가능)
 node_modules/
 
+# Cloudflare Wrangler 로컬 개발 상태 (로컬 D1 등, 기기별)
+.wrangler/
+
 # 캡처용 임시 브라우저 프로필 (사용 안 함 — CDP 방식으로 대체됨)
 scripts/.cap-profile/
 

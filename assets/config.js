@@ -1,13 +1,6 @@
-/* Supabase 연결 설정 — 이 파일만 채우면 전 페이지가 mock→실서버로 전환됩니다.
- * anon(public) key는 브라우저에 노출돼도 안전합니다(RLS로 보호). 공개 repo에 커밋 OK.
- * 값이 비어 있으면 localStorage 목업으로 동작합니다.
- *
- * 연결 순서:
- *   1) supabase.com 에서 프로젝트 생성 (무료)
- *   2) SQL Editor에 supabase/schema.sql 붙여넣어 실행
- *   3) Project Settings → API 에서 아래 두 값 복사해 채우기
+/* 덕구랩 백엔드 설정 — 보통은 손댈 필요 없음.
+ * Cloudflare Pages(+Functions+D1)로 배포하면 같은 도메인의 /api/* 를 자동으로 씁니다.
+ * 배포 전 로컬에서 `npx wrangler pages dev .` 로 API까지 테스트할 때도 기본값 그대로 동작합니다.
+ * 다른 주소의 API를 쓰고 싶을 때만 아래 줄의 주석을 풀고 값을 바꾸세요.
  */
-window.DEOKGU_SUPABASE = {
-  url: '',   // 예: https://abcdefgh.supabase.co
-  key: ''    // anon public key (eyJhbGciOi... 로 시작하는 긴 문자열)
-};
+// window.DEOKGU_API_BASE = 'http://127.0.0.1:8788/api';

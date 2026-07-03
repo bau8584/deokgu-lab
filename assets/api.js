@@ -1,11 +1,12 @@
 /* 덕구랩 데이터 레이어 — 좋아요·제안함·댓글
- * 설정(window.DEOKGU_SUPABASE = {url, key})이 있으면 Supabase REST로,
- * 없으면 localStorage 목업으로 동작한다. 프론트는 이 API만 부르면 되고,
- * 백엔드 연결은 설정 한 줄로 스위치된다. 외부 SDK 없이 fetch만 사용.
+ * Cloudflare Pages Functions(/api/*, D1)가 배포돼 응답하면 그걸 쓰고,
+ * 없으면(로컬 정적 서빙 등) localStorage 목업으로 동작한다. 프론트는 이 API만
+ * 부르면 되고, 백엔드 유무를 자동 감지해 스위치된다(설정 불필요).
+ * window.DEOKGU_API_BASE 로 API base를 오버라이드할 수 있다(기본 '/api').
  */
 (function () {
-  var CFG = window.DEOKGU_SUPABASE;
-  var LIVE = !!(CFG && CFG.url && CFG.key);
+  var API_BASE = (window.DEOKGU_API_BASE || '/api').replace(/\/$/, '');
+  var LIVE = null; // null=미확인, 첫 호출 때 /api/ping 으로 자동 감지
   var LS = window.localStorage;
 
   // ── localStorage 목업 헬퍼 ─────────────────────────────
@@ -13,40 +14,37 @@
   function jset(k, v) { try { LS.setItem(k, JSON.stringify(v)); } catch (e) {} }
   var likedKey = 'dl_liked', likeCntKey = 'dl_likes', fbKey = 'dl_feedback', cmtKey = 'dl_comments';
 
-  // ── 스팸 방어: 최소 작성 간격(cooldown) ────────────────
+  // ── 스팸 방어: 최소 작성 간격(cooldown, 프론트 1차 방어) ──
   var COOLDOWN = { comment: 15000, feedback: 20000 };
   function canPost(kind) { return (Date.now() - (jget('dl_last', {})[kind] || 0)) >= (COOLDOWN[kind] || 15000); }
   function markPost(kind) { var m = jget('dl_last', {}); m[kind] = Date.now(); jset('dl_last', m); }
 
-  // ── Supabase REST 헬퍼 ─────────────────────────────────
-  function sb(path, opts) {
-    opts = opts || {};
-    opts.headers = Object.assign({
-      'apikey': CFG.key,
-      'Authorization': 'Bearer ' + CFG.key,
-      'Content-Type': 'application/json'
-    }, opts.headers || {});
-    return fetch(CFG.url.replace(/\/$/, '') + '/rest/v1/' + path, opts);
+  // ── /api/* 호출 헬퍼 + 백엔드 존재 자동 감지 ─────────────
+  function api(path, opts) { return fetch(API_BASE + path, opts); }
+  function ensureLive() {
+    if (LIVE !== null) return Promise.resolve(LIVE);
+    return api('/ping').then(function (r) { LIVE = !!r.ok; return LIVE; }).catch(function () { LIVE = false; return false; });
+  }
+  function postJson(path, body) {
+    return api(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, body: j }; }); });
   }
 
   var API = {
-    live: LIVE,
+    get live() { return LIVE === true; },
 
     // 여러 item의 좋아요 수 조회 → {id: count}
     getLikes: function (ids) {
-      if (!LIVE) {
-        var m = jget(likeCntKey, {}); var out = {};
-        ids.forEach(function (id) { out[id] = m[id] || 0; });
-        return Promise.resolve(out);
-      }
-      var inList = '(' + ids.map(function (s) { return '"' + s + '"'; }).join(',') + ')';
-      return sb('likes?item_id=in.' + encodeURIComponent(inList) + '&select=item_id,count')
-        .then(function (r) { return r.json(); })
-        .then(function (rows) {
-          var out = {}; ids.forEach(function (id) { out[id] = 0; });
-          (rows || []).forEach(function (row) { out[row.item_id] = row.count; });
+      return ensureLive().then(function (live) {
+        if (!live) {
+          var m = jget(likeCntKey, {}); var out = {};
+          ids.forEach(function (id) { out[id] = m[id] || 0; });
           return out;
-        }).catch(function () { var o = {}; ids.forEach(function (id) { o[id] = 0; }); return o; });
+        }
+        return api('/likes?ids=' + encodeURIComponent(ids.join(',')))
+          .then(function (r) { return r.json(); })
+          .catch(function () { var o = {}; ids.forEach(function (id) { o[id] = 0; }); return o; });
+      });
     },
 
     hasLiked: function (id) { return jget(likedKey, []).indexOf(id) !== -1; },
@@ -55,68 +53,70 @@
     like: function (id, seed) {
       if (this.hasLiked(id)) return Promise.resolve(null);
       var liked = jget(likedKey, []); liked.push(id); jset(likedKey, liked);
-      if (!LIVE) {
-        var m = jget(likeCntKey, {});
-        m[id] = (m[id] != null ? m[id] : (seed || 0)) + 1;
-        jset(likeCntKey, m);
-        return Promise.resolve(m[id]);
-      }
-      return sb('rpc/increment_like', { method: 'POST', body: JSON.stringify({ p_item_id: id }) })
-        .then(function (r) { return r.json(); })
-        .then(function (n) { return typeof n === 'number' ? n : (n && n.count); })
-        .catch(function () { return null; });
+      return ensureLive().then(function (live) {
+        if (!live) {
+          var m = jget(likeCntKey, {});
+          m[id] = (m[id] != null ? m[id] : (seed || 0)) + 1;
+          jset(likeCntKey, m);
+          return m[id];
+        }
+        return postJson('/likes', { item_id: id }).then(function (res) { return res.ok ? res.body.count : (seed || 0) + 1; });
+      });
     },
 
     // 제안함(피드백) 등록 (insert-only)
     addFeedback: function (data) {
-      if (!LIVE) {
-        var arr = jget(fbKey, []); arr.push(Object.assign({ created_at: Date.now() }, data)); jset(fbKey, arr);
-        return Promise.resolve(true);
-      }
-      return sb('feedback', { method: 'POST', headers: { 'Prefer': 'return=minimal' }, body: JSON.stringify(data) })
-        .then(function (r) { return r.ok; });
+      return ensureLive().then(function (live) {
+        if (!live) {
+          var arr = jget(fbKey, []); arr.push(Object.assign({ created_at: Date.now() }, data)); jset(fbKey, arr);
+          return true;
+        }
+        return postJson('/feedback', data).then(function (res) { return res.ok; });
+      });
     },
 
     // 댓글 조회 (최신순) — id·up·down 포함
     getComments: function (itemId) {
-      if (!LIVE) {
-        var all = jget(cmtKey, {}); return Promise.resolve((all[itemId] || []).slice().reverse());
-      }
-      return sb('comments?item_id=eq.' + encodeURIComponent(itemId) + '&select=id,name,message,up,down,created_at&order=created_at.desc')
-        .then(function (r) { return r.json(); }).catch(function () { return []; });
+      return ensureLive().then(function (live) {
+        if (!live) { var all = jget(cmtKey, {}); return (all[itemId] || []).slice().reverse(); }
+        return api('/comments?item_id=' + encodeURIComponent(itemId)).then(function (r) { return r.json(); }).catch(function () { return []; });
+      });
     },
 
-    // 댓글 등록 (data: {item_id,name,message,pw}) → 새 행({id,...})
+    // 댓글 등록 (data: {item_id,name,message,pw,hp}) → 새 행({id,...})
     addComment: function (data) {
-      if (!LIVE) {
-        var all = jget(cmtKey, {}); var arr = all[data.item_id] = all[data.item_id] || [];
-        var row = { id: 'c' + Date.now() + Math.random().toString(36).slice(2, 6), name: data.name || null, message: data.message, pw: data.pw, up: 0, down: 0, created_at: Date.now() };
-        arr.push(row); jset(cmtKey, all); return Promise.resolve({ id: row.id });
-      }
-      return sb('rpc/add_comment', { method: 'POST', body: JSON.stringify({ p_item_id: data.item_id, p_name: data.name || '', p_message: data.message, p_pw: data.pw, p_hp: data.hp || '' }) })
-        .then(function (r) { return r.json(); }).then(function (rows) { return Array.isArray(rows) ? rows[0] : rows; });
+      return ensureLive().then(function (live) {
+        if (!live) {
+          var all = jget(cmtKey, {}); var arr = all[data.item_id] = all[data.item_id] || [];
+          var row = { id: 'c' + Date.now() + Math.random().toString(36).slice(2, 6), name: data.name || null, message: data.message, pw: data.pw, up: 0, down: 0, created_at: Date.now() };
+          arr.push(row); jset(cmtKey, all); return { id: row.id };
+        }
+        return postJson('/comments', data).then(function (res) { return res.body; });
+      });
     },
 
     // 수정 (비번 확인) → true/false
     editComment: function (itemId, id, pw, message) {
-      if (!LIVE) {
-        var all = jget(cmtKey, {}); var c = (all[itemId] || []).filter(function (x) { return x.id === id; })[0];
-        if (!c || String(c.pw) !== String(pw)) return Promise.resolve(false);
-        c.message = message; jset(cmtKey, all); return Promise.resolve(true);
-      }
-      return sb('rpc/edit_comment', { method: 'POST', body: JSON.stringify({ p_id: id, p_pw: pw, p_message: message }) })
-        .then(function (r) { return r.json(); }).catch(function () { return false; });
+      return ensureLive().then(function (live) {
+        if (!live) {
+          var all = jget(cmtKey, {}); var c = (all[itemId] || []).filter(function (x) { return x.id === id; })[0];
+          if (!c || String(c.pw) !== String(pw)) return false;
+          c.message = message; jset(cmtKey, all); return true;
+        }
+        return postJson('/comments/' + encodeURIComponent(id) + '/edit', { pw: pw, message: message }).then(function (res) { return !!(res.body && res.body.ok); });
+      });
     },
 
     // 삭제 (비번 확인) → true/false
     deleteComment: function (itemId, id, pw) {
-      if (!LIVE) {
-        var all = jget(cmtKey, {}); var arr = all[itemId] || []; var c = arr.filter(function (x) { return x.id === id; })[0];
-        if (!c || String(c.pw) !== String(pw)) return Promise.resolve(false);
-        all[itemId] = arr.filter(function (x) { return x.id !== id; }); jset(cmtKey, all); return Promise.resolve(true);
-      }
-      return sb('rpc/delete_comment', { method: 'POST', body: JSON.stringify({ p_id: id, p_pw: pw }) })
-        .then(function (r) { return r.json(); }).catch(function () { return false; });
+      return ensureLive().then(function (live) {
+        if (!live) {
+          var all = jget(cmtKey, {}); var arr = all[itemId] || []; var c = arr.filter(function (x) { return x.id === id; })[0];
+          if (!c || String(c.pw) !== String(pw)) return false;
+          all[itemId] = arr.filter(function (x) { return x.id !== id; }); jset(cmtKey, all); return true;
+        }
+        return postJson('/comments/' + encodeURIComponent(id) + '/delete', { pw: pw }).then(function (res) { return !!(res.body && res.body.ok); });
+      });
     },
 
     votedComment: function (id) { return jget('dl_cvotes', {})[id]; },
@@ -125,13 +125,14 @@
     voteComment: function (itemId, id, dir) {
       var v = jget('dl_cvotes', {}); if (v[id]) return Promise.resolve(null);
       v[id] = dir; jset('dl_cvotes', v);
-      if (!LIVE) {
-        var all = jget(cmtKey, {}); var c = (all[itemId] || []).filter(function (x) { return x.id === id; })[0];
-        if (!c) return Promise.resolve(null); c[dir] = (c[dir] || 0) + 1; jset(cmtKey, all);
-        return Promise.resolve({ up: c.up || 0, down: c.down || 0 });
-      }
-      return sb('rpc/vote_comment', { method: 'POST', body: JSON.stringify({ p_id: id, p_dir: dir }) })
-        .then(function (r) { return r.json(); }).then(function (rows) { return Array.isArray(rows) ? rows[0] : rows; }).catch(function () { return null; });
+      return ensureLive().then(function (live) {
+        if (!live) {
+          var all = jget(cmtKey, {}); var c = (all[itemId] || []).filter(function (x) { return x.id === id; })[0];
+          if (!c) return null; c[dir] = (c[dir] || 0) + 1; jset(cmtKey, all);
+          return { up: c.up || 0, down: c.down || 0 };
+        }
+        return postJson('/comments/' + encodeURIComponent(id) + '/vote', { dir: dir }).then(function (res) { return res.ok ? res.body : null; });
+      });
     }
   };
 
