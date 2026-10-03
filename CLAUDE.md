@@ -54,3 +54,6 @@ deokgu-lab/
 
 ## 스택
 정적 HTML → Cloudflare Pages. `master`에 푸시하면 자동 배포. 백엔드는 Cloudflare D1(`deokgu-lab-db`, 좋아요·제안함).
+
+## 브랜치 (2026-10-03 결정 — 상위 "dev 하나" 규칙의 예외)
+**dev 없이 `master`에서 직접 작업·커밋·푸시한다.** 푸시 = 1분 뒤 배포이므로 푸시 전 화면 확인. D1 표 바꾸기는 따로 작업이 필요함.
