@@ -59,6 +59,19 @@
   .links a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent}
   .links a:hover{border-bottom-color:var(--cheese)}
   .logo-img{height:clamp(88px,14vw,150px);width:auto;display:block}
+  .worklog{margin-top:56px}
+  .worklog h2{font-family:'Gaegu',cursive;font-size:30px;font-weight:700;margin-bottom:12px}
+  .worklog h2 small{font-family:'Gowun Dodum',sans-serif;font-size:13px;font-weight:400;color:var(--ink-soft);margin-left:8px}
+  .wl-list{list-style:none;border-left:3px solid var(--line);padding-left:18px;display:flex;flex-direction:column;gap:14px}
+  .wl-item{position:relative}
+  .wl-item::before{content:'';position:absolute;left:-26px;top:8px;width:11px;height:11px;border-radius:50%;background:var(--cheese);border:2px solid var(--cream)}
+  .wl-meta{font-size:12px;color:var(--ink-soft)}
+  .wl-meta b{font-weight:400;color:var(--cheese-deep);margin-left:6px}
+  .wl-title{font-size:16px}
+  .wl-title a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--mint)}
+  .wl-line{font-size:14px;color:var(--ink-soft)}
+  .wl-shot{margin-top:6px;max-width:320px;width:100%;border-radius:10px;border:1px solid var(--line)}
+  .wl-more{margin-top:12px;font-family:'Gaegu',cursive;font-size:17px;background:none;border:none;color:var(--cheese-deep);cursor:pointer}
   @media(max-width:560px){.logo .name{font-size:42px}.controls{justify-content:center}}
 </style>
 </head>
@@ -189,6 +202,11 @@
         <p style="margin-top:8px;font-size:13px">새 실험이 준비되면 여기에</p>
       </article>
     </div>
+    <section class="worklog" id="worklog" hidden>
+      <h2>작업일지<small>요즘 고친 것·만든 것</small></h2>
+      <ul class="wl-list"></ul>
+      <button class="wl-more" hidden>더 보기 ↓</button>
+    </section>
   </main>
   <footer>
     <p class="reveal">사실 덕구는 저예요. 뀨는 고양이고요. 🐈</p>
@@ -197,6 +215,24 @@
 </div>
 <script src="assets/config.js"></script>
 <script src="assets/api.js"></script>
+<script src="assets/worklog.js"></script>
+<script>
+  // 작업일지: assets/worklog.js 목록을 날짜 최신순으로 5개 보여 주고, 나머지는 '더 보기'
+  (function(){
+    const log=(window.WORKLOG||[]).slice().sort((a,b)=>b.date.localeCompare(a.date));
+    const sec=document.getElementById('worklog');if(!log.length||!sec)return;
+    const ul=sec.querySelector('.wl-list'),more=sec.querySelector('.wl-more');
+    const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    log.forEach((e,i)=>{
+      const li=document.createElement('li');li.className='wl-item';if(i>=5)li.hidden=true;
+      const t=e.link?`<a href="${esc(e.link)}">${esc(e.title)}</a>`:esc(e.title);
+      li.innerHTML=`<div class="wl-meta">${esc(e.date.replace(/-/g,'.'))}<b>${esc(e.app)}</b></div><div class="wl-title">${t}</div><div class="wl-line">${esc(e.line)}</div>`+(e.shot?`<img class="wl-shot" src="${esc(e.shot)}" alt="" loading="lazy">`:'');
+      ul.appendChild(li);
+    });
+    if(log.length>5){more.hidden=false;more.onclick=()=>{ul.querySelectorAll('[hidden]').forEach(x=>x.hidden=false);more.hidden=true;};}
+    sec.hidden=false;
+  })();
+</script>
 <script>
   // 스크린샷 자리: data-shot에 파일 경로가 있으면 이미지로 채운다(비면 자리표시 유지)
   document.querySelectorAll('.thumb[data-shot]').forEach(t=>{
