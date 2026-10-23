@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ▼▼ 앱마다 교체 ▼▼ -->
+<title>AI가 낸 숫자, 믿어도 될까요? — 덕구랩</title>
+<meta name="description" content="AI가 자신 있게 내놓은 숫자가 세 번 틀렸어요. 코드를 못 읽는 교사가 잡아낸 방법은 질문 몇 개였어요.">
+<meta property="og:title" content="AI가 낸 숫자, 믿어도 될까요? — 덕구랩">
+<meta property="og:description" content="AI가 자신 있게 내놓은 숫자가 세 번 틀렸어요. 코드를 못 읽는 교사가 잡아낸 방법은 질문 몇 개였어요.">
+<meta property="og:type" content="article">
+<!-- ▲▲ 앱마다 교체 ▲▲ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root{--cheese:#F2A33C;--cheese-deep:#C77A2C;--cream:#FFF7EC;--paper:#FFFDF8;--ink:#2E2A26;--ink-soft:#7A6A56;--mint:#3CC9A0;--line:#EAD9BE;--pink:#E8938A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Gowun Dodum',sans-serif;color:var(--ink);background:var(--cream);line-height:1.8;-webkit-font-smoothing:antialiased}
+  .hand{font-family:'Gaegu',cursive}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .back{font-family:'Gaegu',cursive;font-size:19px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .back:hover{color:var(--cheese-deep)}
+  .home-logo{height:44px;width:auto}
+  article{padding:8px 0 24px}
+  .cat{display:inline-block;font-size:13px;background:#FBEEDA;color:var(--cheese-deep);border-radius:20px;padding:4px 13px;margin-bottom:14px}
+  h1{font-family:'Gaegu',cursive;font-weight:700;font-size:clamp(34px,6vw,48px);line-height:1.15;margin-bottom:14px}
+  .hook{font-size:20px;color:var(--ink);background:var(--paper);border-left:5px solid var(--mint);border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0 26px}
+  .tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:26px}
+  .tag{font-size:12px;padding:4px 11px;border-radius:20px;background:#FBEEDA;color:var(--cheese-deep)}
+  .tag.mint{background:#E1F6EF;color:#1c8f6f}
+  article h2{font-family:'Gaegu',cursive;font-weight:700;font-size:27px;margin:34px 0 10px;color:var(--ink)}
+  article p{margin:12px 0;font-size:16.5px}
+  figure{margin:22px 0}
+  figure img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 8px 22px rgba(199,122,44,.12)}
+  figcaption{text-align:center;font-size:13px;color:var(--ink-soft);margin-top:8px}
+  .video{position:relative;aspect-ratio:16/9;margin:22px 0}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:14px}
+  .cta{display:block;text-align:center;font-family:'Gaegu',cursive;font-size:22px;background:var(--cheese);color:#fff;text-decoration:none;border-radius:16px;padding:16px;margin:32px 0 10px;box-shadow:0 8px 20px rgba(242,163,60,.35)}
+  .cta:hover{background:var(--cheese-deep)}
+  .note{font-size:13.5px;color:var(--ink-soft);text-align:center;margin-bottom:8px}
+  .foot-actions{display:flex;gap:12px;justify-content:center;align-items:center;margin:30px 0;padding-top:24px;border-top:1px dashed var(--line)}
+  .like{font-family:'Gowun Dodum',sans-serif;font-size:15px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:9px 18px;cursor:pointer;display:inline-flex;gap:7px}
+  .like:hover{border-color:var(--pink);color:var(--ink)}
+  .sign{font-family:'Gaegu',cursive;font-size:18px;color:var(--ink-soft);text-align:center;margin:26px 0 60px}
+  /* 좋아요·댓글은 다음 세션에 Supabase 연결. 지금은 자리표시(UI만). */
+  .grade{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;background:var(--paper);border-radius:12px;overflow:hidden}
+  .grade td,.grade th{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  .grade th{background:#FBEEDA;color:var(--cheese-deep);font-weight:normal}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back" href="../../index.html">← 덕구랩</a>
+    <img class="home-logo" src="../../assets/logo.png" alt="덕구랩" onerror="this.style.display='none'">
+  </div>
+  <article>
+    <span class="cat">📒 배움노트 ①</span>
+    <h1>AI가 낸 숫자, 믿어도 될까요?</h1>
+    <div class="hook">AI가 자신 있게 내놓은 숫자가 세 번 틀렸어요. 코드를 못 읽는 교사가 잡아낸 방법은 질문 몇 개였어요.</div>
+    <div class="tags"><span class="tag mint">배움노트</span><span class="tag">AI와 일하기</span><span class="tag">비개발자</span></div>
+
+    <h2>한 줄 결론</h2>
+    <p><b>숫자가 결정을 가르면, "재 봐"라고 시키고, 잰 숫자는 내 감각과 맞춰 봐요.</b> 셋 다 코드를 몰라도 할 수 있었어요.</p>
+
+    <h2>① 추정 — "80MB면 너무 큰데?"</h2>
+    <p>모임에서 쓰는 게임 앱을 만들고 있었어요. 서버 비용을 따지던 AI가 "모임 한 번에 약 80MB"라고 추정하고, 그 위에 규모별 비용표까지 쌓았어요.</p>
+    <p>왠지 커 보여서 "직접 확인해 봐"라고 했어요. 실제로 재 보니 <b>한 달 전체가 83MB</b>. 추정이 3배 넘게 컸어요.</p>
+    <p>더 재밌는 건 그다음이에요. 용량은 걱정할 게 없었는데, <b>진짜 벽은 따로</b> 있었어요(동시 접속 한도). 재 보니 틀린 숫자만 고쳐진 게 아니라 진짜 문제가 보였어요.</p>
+
+    <h2>② 측정 — "왜 이게 1등이지?"</h2>
+    <p>이번엔 AI가 직접 쟀어요. 게임 40여 개를 가짜 폰 4대로 한 판씩 돌려 데이터 사용량 순위표를 만들었죠.</p>
+    <p>그런데 순위가 이상했어요. 한 사람이 한두 번 누르는 게임이 1등이고, 데이터를 많이 쓸 것 같은 그림 게임은 거의 꼴찌.</p>
+    <p>"상위 셋은 이해가 안 돼"라고 했더니 원인이 나왔어요. 가짜 폰이 화면을 <b>초당 5번씩 아무렇게나</b> 눌러서, 한 판에 700번이 눌려 있었던 거예요. 실제 모임에선 1~2번이에요.</p>
+    <table class="grade">
+      <tr><th></th><th>AI 측정</th><th>실제 모임</th></tr>
+      <tr><td>버튼 누른 횟수</td><td>한 판 700번</td><td>1~2번</td></tr>
+      <tr><td>그림 게임</td><td>거의 꼴찌</td><td>인원 늘면 상위권</td></tr>
+    </table>
+    <p><b>잰 숫자도 '어떻게 쟀나'를 모르면 추정과 같아요.</b> 결과가 내 감각과 어긋나면, 틀린 쪽은 감각이 아니라 재는 방법일 때가 많았어요.</p>
+
+    <h2>③ 데이터 — "이 여섯 명, 왜 다 똑같지?"</h2>
+    <p>앱이 얼마나 퍼지는지 보려고 기기별 표를 처음 뽑았어요. 맨 위 여섯 줄이 모두 "모임 13번 참가"로 똑같았어요.</p>
+    <p>진짜 사람 여섯이 똑같이 13번 올 리가 없죠. 알고 보니 <b>AI가 화면을 시험하려고 넣은 가짜 참가자</b>였어요. 걸러 내니 기기 288대가 217대로, 판 수는 36판이 13판으로 줄었어요.</p>
+    <p>가게 매출에 점원이 연습으로 찍은 영수증이 섞여 있던 셈이에요. 집계는 틀려도 틀렸다고 말해 주지 않아요. <b>맨 위 몇 줄을 사람 눈으로 읽는 것</b>이 가장 싼 점검이었어요.</p>
+
+    <h2>코드 몰라도 쓰는 질문 세 개</h2>
+    <table class="grade">
+      <tr><th>이럴 때</th><th>이렇게 물어요</th></tr>
+      <tr><td>AI가 숫자로 결정을 권할 때</td><td>"그 숫자, 직접 재 볼 수 있어?"</td></tr>
+      <tr><td>잰 결과가 내 짐작과 다를 때</td><td>"왜 이게 1등이야? 어떻게 쟀어?"</td></tr>
+      <tr><td>표를 처음 받았을 때</td><td>맨 위 몇 줄을 직접 읽고 "이 사람들 진짜야?"</td></tr>
+    </table>
+    <p>개발자에겐 숫자 감각이 있어요. 저는 없어요. 대신 <b>현장에서 사람들이 실제로 어떻게 쓰는지</b>를 알아요. 그 감각이 세 번 다 "이상한데?"를 잡았어요.</p>
+
+    <div class="foot-actions">
+      <button class="like" title="도움됐어요">🐾 도움됐어요 <b>0</b></button>
+    </div>
+    <p class="sign hand">만드는 재미로 사는 초등쌤, 박덕구 🐈</p>
+  </article>
+</div>
+<script src="../../assets/config.js"></script>
+<script src="../../assets/api.js"></script>
+<script>DeokguPost.init();</script>
+</body>
+</html>
