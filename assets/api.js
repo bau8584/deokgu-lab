@@ -1,5 +1,5 @@
 /* 덕구랩 데이터 레이어 — 좋아요·제안함·댓글
- * Cloudflare Pages Functions(/api/*, D1)가 배포돼 응답하면 그걸 쓰고,
+ * 서버(server/server.py의 /api/*)가 응답하면 그걸 쓰고,
  * 없으면(로컬 정적 서빙 등) localStorage 목업으로 동작한다. 프론트는 이 API만
  * 부르면 되고, 백엔드 유무를 자동 감지해 스위치된다(설정 불필요).
  * window.DEOKGU_API_BASE 로 API base를 오버라이드할 수 있다(기본 '/api').

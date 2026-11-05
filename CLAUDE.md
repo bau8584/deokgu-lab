@@ -48,12 +48,18 @@ deokgu-lab/
 ├─ shots/    # capture.mjs 결과 (앱별 폴더)
 ├─ docs/     # 브랜드가이드·작품인벤토리·뀨 캐릭터 브리프
 ├─ scripts/capture.mjs
-├─ functions/ # D1 API (좋아요·제안함)
+├─ server/server.py # 서버(화면 + 좋아요·댓글·제안함 API)
+├─ d1/schema.sql    # 표 모양(서버가 켜질 때 읽음)
+├─ functions/ # 옛 Cloudflare API — 지금 안 씀
 └─ wrangler.toml
 ```
 
 ## 스택
-정적 HTML → Cloudflare Pages. `master`에 푸시하면 자동 배포. 백엔드는 Cloudflare D1(`deokgu-lab-db`, 좋아요·제안함).
+정적 HTML + 작은 파이썬 서버 → 미니 PC 상자 `local-backend-deokgu-lab-1` → https://lab.deokgu.com (2026-11-05 Cloudflare Pages에서 옮김). 데이터는 미니 PC `C:\srv\local-backend\data\deokgu-lab\lab.db`(SQLite, 매일 백업에 포함). 제안함 글도 여기 있다 — 보려면 우편 부탁으로 읽는다.
+
+## 배포 — `master`에 push하고 우편으로 "배포: deokgu-lab"
+push만으로는 새 주소에 안 보인다. 미니 PC가 받아 와야 한다:
+`powershell -ExecutionPolicy Bypass -File C:\우편\_도구\보내기.ps1 -제목 배포-덕구랩 -폴더 C:\code\deokgu-lab -내용 "배포: deokgu-lab. master의 최신 커밋을 git pull --ff-only로 받고 docker compose restart deokgu-lab 후 https://lab.deokgu.com/ 응답 확인"`
 
 ## 브랜치 (2026-10-03 결정 — 상위 "dev 하나" 규칙의 예외)
-**dev 없이 `master`에서 직접 작업·커밋·푸시한다.** 푸시 = 1분 뒤 배포이므로 푸시 전 화면 확인. D1 표 바꾸기는 따로 작업이 필요함.
+**dev 없이 `master`에서 직접 작업·커밋·푸시한다.** 원격 이름은 `github`. push 전 화면 확인(노트북 시험: `LAB_SITE`·`LAB_DATA`를 주고 `python server/server.py`, 포트 8793). 표는 열 추가만.
